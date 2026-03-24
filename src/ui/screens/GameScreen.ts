@@ -45,6 +45,7 @@ export class GameScreen extends Component {
   private gameStateListener: ((state: string) => void) | null = null;
   private pendingTimeouts: number[] = [];
   private lastTickSecond: number = -1;
+  private timeoutHandled: boolean = false;
 
   constructor(options: GameScreenOptions) {
     super('div');
@@ -74,7 +75,7 @@ export class GameScreen extends Component {
         ${this.renderPlayerIndicator(currentPlayer)}
       </div>
 
-      <div class="game-screen__question">
+      <div class="game-screen__question" role="status" aria-live="polite" aria-atomic="true">
         ${question ? question.displayText : ''}
       </div>
 
@@ -162,6 +163,7 @@ export class GameScreen extends Component {
 
   private startQuestion(): void {
     this.screenState = 'question';
+    this.timeoutHandled = false;
     const timer = this.game.getTimer();
     const timeLimit = this.game.getTimeLimit();
     
@@ -245,8 +247,9 @@ export class GameScreen extends Component {
   }
 
   private handleTimeout(): void {
-    if (this.screenState !== 'question') return;
+    if (this.screenState !== 'question' || this.timeoutHandled) return;
     
+    this.timeoutHandled = true;
     this.screenState = 'feedback';
     this.stopTimer();
     

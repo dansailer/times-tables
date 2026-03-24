@@ -23,6 +23,7 @@ export class AvatarPicker extends Component {
   private selectedId: string | null;
   private disabledIds: Set<string>;
   private onSelect?: (avatar: Avatar) => void;
+  private touchHandled: boolean = false;
 
   constructor(options: AvatarPickerOptions = {}) {
     super('div');
@@ -82,15 +83,20 @@ export class AvatarPicker extends Component {
 
       // Click handler
       if (!isDisabled) {
-        button.addEventListener('click', (e) => {
-          e.preventDefault();
-          this.selectAvatar(avatar);
-        });
-        
-        // Touch support
         button.addEventListener('touchend', (e) => {
           if (!isDisabled) {
             e.preventDefault();
+            this.touchHandled = true;
+            this.selectAvatar(avatar);
+            // Reset flag after a short delay
+            setTimeout(() => { this.touchHandled = false; }, 100);
+          }
+        });
+        
+        button.addEventListener('click', (e) => {
+          e.preventDefault();
+          // Only handle click if not already handled by touch
+          if (!this.touchHandled) {
             this.selectAvatar(avatar);
           }
         });

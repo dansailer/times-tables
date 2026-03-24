@@ -23,8 +23,7 @@ import {
 } from './ui';
 
 // Initialize i18n first
-const detectedLanguage = initI18n();
-console.log(`[App] Initialized with language: ${detectedLanguage}`);
+initI18n();
 
 // App state
 type AppScreen = 'start' | 'setup' | 'game' | 'results';
@@ -60,13 +59,15 @@ class App {
         soundEngine.init();
         soundEngine.resume();
         this.soundInitialized = true;
-        console.log('[App] Sound engine initialized');
+        // Remove both listeners since one fired
+        document.removeEventListener('touchstart', handler);
+        document.removeEventListener('click', handler);
       }
     };
     
     // Listen for various interaction events
-    document.addEventListener('touchstart', handler, { once: true });
-    document.addEventListener('click', handler, { once: true });
+    document.addEventListener('touchstart', handler);
+    document.addEventListener('click', handler);
   }
 
   /**

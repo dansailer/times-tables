@@ -145,14 +145,14 @@ src/ui/screens/
 
 ## Phase 5: Audio & Animations
 **Branch**: `feature/audio-animations`
-**PR**: #6
+**PR**: #7
 
 ### Tasks
-- [ ] Implement Web Audio synthesizer
-- [ ] Create sound effects (correct, wrong, tick, fanfare)
-- [ ] Add CSS animations (confetti, shake, pulse)
-- [ ] Implement celebration sequences
-- [ ] Add visual feedback for answers
+- [x] Implement Web Audio synthesizer
+- [x] Create sound effects (correct, wrong, tick, fanfare)
+- [x] Add CSS animations (confetti, shake, pulse)
+- [x] Implement celebration sequences
+- [x] Add visual feedback for answers
 
 ### Files Created
 ```
@@ -175,18 +175,23 @@ src/ui/
 
 ## Phase 6: Polish & Testing
 **Branch**: `feature/polish`
-**PR**: #7
+**PR**: #8
 
 ### Tasks
+- [x] Remove console.log statements
+- [x] Fix double event firing on touch devices
+- [x] Add aria-live to question display for accessibility
+- [x] Add error handling to SoundEngine async operations
+- [x] Fix race condition in GameScreen timeout handling
+- [x] Clean up sound init event listeners properly
+- [x] Remove unused game singleton export
 - [ ] Test on iPad Safari
 - [ ] Test on iPhone Safari (responsive design)
 - [ ] Verify fullscreen mode (Add to Home Screen)
-- [ ] Add "Add to Home Screen" prompt for PWA
 - [ ] Test all times tables combinations
 - [ ] Verify touch interactions
 - [ ] Performance optimization
 - [ ] Accessibility review (contrast, touch targets)
-- [ ] Fix any discovered bugs
 
 ### Acceptance Criteria
 - No console errors
@@ -230,8 +235,8 @@ src/ui/
 | 2. Core Game Logic | Complete | #3 | `feature/game-logic` |
 | 3. UI Components | Complete | #4 | `feature/ui-components` |
 | 4. Game Screens | Complete | #6 | `feature/screens` |
-| 5. Audio & Animations | In Progress | #7 | `feature/audio-animations` |
-| 6. Polish & Testing | Pending | - | `feature/polish` |
+| 5. Audio & Animations | Complete | #7 | `feature/audio-animations` |
+| 6. Polish & Testing | In Progress | #8 | `feature/polish` |
 | 7. Deployment | Complete | - | Hardened workflow deployed |
 
 ---
