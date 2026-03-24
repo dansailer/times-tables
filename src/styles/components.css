@@ -9,6 +9,7 @@
   width: 100%;
   max-width: 400px;
   height: 24px;
+  margin: 0 auto;
   background: var(--color-bg-dark);
   border-radius: var(--border-radius-md);
   overflow: hidden;
@@ -56,6 +57,7 @@
   gap: var(--spacing-md);
   width: 100%;
   max-width: 320px;
+  margin: 0 auto;
 }
 
 .number-pad__display {
@@ -109,13 +111,13 @@
 
 .number-pad__key--action {
   background: linear-gradient(180deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
 }
 
 .number-pad__key--submit {
   background: linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
   color: var(--color-bg-dark);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
 }
 
 /* ===== Multiple Choice ===== */
@@ -126,6 +128,7 @@
   gap: var(--spacing-md);
   width: 100%;
   max-width: 400px;
+  margin: 0 auto;
 }
 
 .multiple-choice__option {
