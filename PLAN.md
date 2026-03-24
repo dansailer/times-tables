@@ -85,21 +85,25 @@ src/i18n/
 **PR**: #4
 
 ### Tasks
-- [ ] Build TimerBar component
-- [ ] Create NumberPad for hard mode
-- [ ] Create MultipleChoice for easy mode
-- [ ] Build AvatarPicker with 12 avatars
-- [ ] Implement 180° rotation system
+- [x] Build TimerBar component
+- [x] Create NumberPad for hard mode
+- [x] Create MultipleChoice for easy mode
+- [x] Build AvatarPicker with 12 avatars
+- [x] Implement 180° rotation system
 
 ### Files Created
 ```
 src/ui/
+├── index.ts
 ├── components/
+│   ├── Component.ts
 │   ├── TimerBar.ts
 │   ├── NumberPad.ts
 │   ├── MultipleChoice.ts
 │   └── AvatarPicker.ts
-└── rotation.ts
+├── rotation.ts
+src/styles/
+└── components.css
 ```
 
 ### Acceptance Criteria
@@ -221,7 +225,7 @@ src/ui/
 |-------|--------|------|--------|
 | 1. Project Setup | Complete | #2 | `feature/project-setup` |
 | 2. Core Game Logic | Complete | #3 | `feature/game-logic` |
-| 3. UI Components | Pending | - | `feature/ui-components` |
+| 3. UI Components | Complete | #4 | `feature/ui-components` |
 | 4. Game Screens | Pending | - | `feature/screens` |
 | 5. Audio & Animations | Pending | - | `feature/audio-animations` |
 | 6. Polish & Testing | Pending | - | `feature/polish` |
