@@ -269,16 +269,69 @@ h3 {
 }
 
 /* ===== Responsive Adjustments ===== */
-@media (max-height: 600px) {
+
+/* iPhone SE, small phones (< 375px width) */
+@media (max-width: 374px) {
   :root {
-    --font-size-giant: 56px;
-    --font-size-xxl: 36px;
-    --font-size-xl: 28px;
-    --spacing-xl: 24px;
-    --spacing-xxl: 32px;
+    --font-size-giant: 40px;
+    --font-size-xxl: 28px;
+    --font-size-xl: 22px;
+    --font-size-lg: 18px;
+    --font-size-md: 14px;
+    --spacing-xl: 16px;
+    --spacing-xxl: 24px;
+    --spacing-lg: 16px;
+  }
+  
+  .avatar--large {
+    width: 80px;
+    height: 80px;
+    font-size: 48px;
   }
 }
 
+/* iPhone standard (375-430px width) */
+@media (min-width: 375px) and (max-width: 430px) {
+  :root {
+    --font-size-giant: 48px;
+    --font-size-xxl: 32px;
+    --font-size-xl: 24px;
+    --spacing-xl: 20px;
+    --spacing-xxl: 28px;
+  }
+}
+
+/* Short screens (landscape or small devices) */
+@media (max-height: 600px) {
+  :root {
+    --font-size-giant: 48px;
+    --font-size-xxl: 32px;
+    --font-size-xl: 24px;
+    --spacing-xl: 16px;
+    --spacing-xxl: 24px;
+  }
+  
+  .screen {
+    gap: var(--spacing-md);
+  }
+}
+
+/* Very short screens (iPhone SE landscape) */
+@media (max-height: 400px) {
+  :root {
+    --font-size-giant: 36px;
+    --font-size-xxl: 24px;
+    --font-size-xl: 20px;
+  }
+  
+  .avatar--large {
+    width: 60px;
+    height: 60px;
+    font-size: 36px;
+  }
+}
+
+/* iPad and larger */
 @media (min-width: 768px) {
   :root {
     --font-size-giant: 96px;
@@ -287,5 +340,73 @@ h3 {
   
   #app {
     padding: var(--spacing-xl);
+  }
+}
+
+/* ===== Add to Home Screen Prompt ===== */
+.pwa-prompt {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, var(--color-bg-medium) 0%, var(--color-bg-dark) 100%);
+  border-top: 2px solid var(--color-gold);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+  z-index: 1000;
+  animation: slide-up 0.3s ease-out;
+}
+
+.pwa-prompt__text {
+  font-size: var(--font-size-md);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+.pwa-prompt__instructions {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.pwa-prompt__icon {
+  font-size: 20px;
+}
+
+.pwa-prompt__buttons {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-sm);
+}
+
+.pwa-prompt__dismiss {
+  background: transparent;
+  border: 1px solid var(--color-text-secondary);
+  color: var(--color-text-secondary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Hide prompt when running as standalone PWA */
+@media (display-mode: standalone) {
+  .pwa-prompt {
+    display: none;
   }
 }

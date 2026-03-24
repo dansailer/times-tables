@@ -179,7 +179,9 @@ src/ui/
 
 ### Tasks
 - [ ] Test on iPad Safari
-- [ ] Verify fullscreen mode
+- [ ] Test on iPhone Safari (responsive design)
+- [ ] Verify fullscreen mode (Add to Home Screen)
+- [ ] Add "Add to Home Screen" prompt for PWA
 - [ ] Test all times tables combinations
 - [ ] Verify touch interactions
 - [ ] Performance optimization
@@ -188,10 +190,11 @@ src/ui/
 
 ### Acceptance Criteria
 - No console errors
-- Smooth performance on iPad
+- Smooth performance on iPad and iPhone
 - All game modes work correctly
 - Touch targets are accessible
-- Fullscreen mode works properly
+- Fullscreen mode works via Add to Home Screen
+- PWA prompt shown on first visit
 
 ---
 

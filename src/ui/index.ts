@@ -20,3 +20,8 @@ export {
   destroyRotation,
   type RotationState,
 } from './rotation';
+
+export {
+  showPWAPromptIfNeeded,
+  resetPWAPrompt,
+} from './pwa-prompt';

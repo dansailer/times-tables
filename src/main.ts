@@ -9,7 +9,7 @@ import { initI18n, t, getLanguage, type TranslationKey } from './i18n';
 import { generateQuestion, generateChoices } from './game/Question';
 import { AVATARS, DIFFICULTY_SETTINGS } from './game/types';
 import { Timer } from './game/Timer';
-import { TimerBar, MultipleChoice, NumberPad, AvatarPicker, initRotation, animateRotation } from './ui';
+import { TimerBar, MultipleChoice, NumberPad, AvatarPicker, initRotation, animateRotation, showPWAPromptIfNeeded } from './ui';
 
 // Initialize i18n first
 const detectedLanguage = initI18n();
@@ -78,6 +78,9 @@ function initApp(): void {
   demoRotationBtn?.addEventListener('click', () => {
     demoRotation();
   });
+
+  // Show PWA prompt if on iOS Safari and not already installed
+  showPWAPromptIfNeeded();
 }
 
 /**
