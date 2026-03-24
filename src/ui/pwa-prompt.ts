@@ -34,8 +34,15 @@ function isIOSSafari(): boolean {
   const isChrome = /CriOS/.test(ua);
   const isFirefox = /FxiOS/.test(ua);
   
-  // iOS Safari: iOS + WebKit but not Chrome or Firefox
-  return isIOS && isWebkit && !isChrome && !isFirefox;
+  // iPadOS 13+ Safari may report a desktop-like UA (e.g. "Macintosh"),
+  // so fall back to platform + touch detection for iPadOS.
+  const isIpadOS = navigator.platform === 'MacIntel' &&
+    (navigator as unknown as { maxTouchPoints?: number }).maxTouchPoints !== undefined &&
+    (navigator as unknown as { maxTouchPoints?: number }).maxTouchPoints! > 1;
+  const isIOSLike = isIOS || isIpadOS;
+  
+  // iOS/iPadOS Safari: iOS-like + WebKit but not Chrome or Firefox
+  return isIOSLike && isWebkit && !isChrome && !isFirefox;
 }
 
 /**
@@ -78,7 +85,7 @@ function createPrompt(): HTMLElement {
       ${t('pwa.instructions', { icon: `<span class="pwa-prompt__icon">${shareIcon}</span>` })}
     </div>
     <div class="pwa-prompt__buttons">
-      <button class="pwa-prompt__dismiss" id="pwa-dismiss">
+      <button class="pwa-prompt__dismiss">
         ${t('pwa.dismiss')}
       </button>
     </div>
@@ -114,13 +121,19 @@ export function showPWAPromptIfNeeded(): void {
     return;
   }
 
+  // Don't create another prompt if one is already visible
+  if (document.querySelector('.pwa-prompt')) {
+    console.log('[PWA] Prompt already shown, skipping');
+    return;
+  }
+
   console.log('[PWA] Showing Add to Home Screen prompt');
 
   const prompt = createPrompt();
   document.body.appendChild(prompt);
 
-  // Handle dismiss
-  const dismissBtn = document.getElementById('pwa-dismiss');
+  // Handle dismiss - use querySelector on prompt to avoid duplicate id issues
+  const dismissBtn = prompt.querySelector('.pwa-prompt__dismiss');
   dismissBtn?.addEventListener('click', () => {
     setDismissed();
     prompt.remove();
