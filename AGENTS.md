@@ -13,6 +13,7 @@
 - Adventure quest theme with avatars
 - Gamification with speed bonuses (hard mode only)
 - Synthesized sound effects using Web Audio API
+- Internationalization (i18n) with automatic language detection
 
 ## Technical Stack
 
@@ -43,6 +44,7 @@ times-tables/
 │   ├── game/           # Core game logic
 │   ├── ui/             # UI components and screens
 │   ├── audio/          # Web Audio synthesis
+│   ├── i18n/           # Internationalization
 │   └── styles/         # CSS files
 └── public/             # Static assets
 ```

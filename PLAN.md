@@ -47,11 +47,13 @@ Each phase results in a separate PR for easy review.
 **PR**: #3
 
 ### Tasks
-- [ ] Create TypeScript interfaces (types.ts)
-- [ ] Implement Question generator
-- [ ] Build Timer class with callbacks
-- [ ] Create Scoring module with speed bonus
-- [ ] Build Game state machine
+- [x] Create TypeScript interfaces (types.ts)
+- [x] Implement i18n system with browser language detection
+- [x] Add English and German translations
+- [x] Implement Question generator
+- [x] Build Timer class with callbacks
+- [x] Create Scoring module with speed bonus
+- [x] Build Game state machine
 
 ### Files Created
 ```
@@ -61,6 +63,11 @@ src/game/
 ├── Question.ts
 ├── Timer.ts
 └── Scoring.ts
+src/i18n/
+├── index.ts
+├── translations/
+│   ├── en.ts
+│   └── de.ts
 ```
 
 ### Acceptance Criteria
@@ -68,6 +75,8 @@ src/game/
 - Timer counts down and triggers callbacks
 - Scoring calculates correctly with speed bonus
 - Game state transitions work properly
+- Language auto-detected from browser
+- All UI text uses translation system
 
 ---
 
@@ -211,7 +220,7 @@ src/ui/
 | Phase | Status | PR | Branch |
 |-------|--------|------|--------|
 | 1. Project Setup | Complete | #2 | `feature/project-setup` |
-| 2. Core Game Logic | Pending | - | `feature/game-logic` |
+| 2. Core Game Logic | Complete | #3 | `feature/game-logic` |
 | 3. UI Components | Pending | - | `feature/ui-components` |
 | 4. Game Screens | Pending | - | `feature/screens` |
 | 5. Audio & Animations | Pending | - | `feature/audio-animations` |
