@@ -72,15 +72,26 @@ export class NumberPad extends Component {
       key.classList.add(extraClass);
     }
     key.textContent = label;
-    key.addEventListener('click', (e) => {
-      e.preventDefault();
-      onClick();
-    });
-    // Prevent double-tap zoom on iOS
+    
+    // Track if touch already handled this interaction
+    let touchHandled = false;
+    
     key.addEventListener('touchend', (e) => {
       e.preventDefault();
+      touchHandled = true;
       onClick();
+      // Reset flag after a short delay
+      setTimeout(() => { touchHandled = false; }, 100);
     });
+    
+    key.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Only handle click if not already handled by touch
+      if (!touchHandled) {
+        onClick();
+      }
+    });
+    
     return key;
   }
 

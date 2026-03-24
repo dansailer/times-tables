@@ -561,6 +561,3 @@ export class Game {
     this.listeners.clear();
   }
 }
-
-// Export singleton instance
-export const game = new Game();

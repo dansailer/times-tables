@@ -18,8 +18,8 @@ import { rotateToPlayer } from '../rotation';
 import { shakeElement, pulseElement } from '../animations';
 import { soundEngine } from '../../audio';
 import { t, type TranslationKey } from '../../i18n';
-import type { Game } from '../../game/Game';
-import type { Player } from '../../game/types';
+import type { Game, GameListener } from '../../game/Game';
+import type { GameState, Player } from '../../game/types';
 import { DIFFICULTY_SETTINGS } from '../../game/types';
 
 export interface GameScreenOptions {
@@ -42,15 +42,21 @@ export class GameScreen extends Component {
   // Screen state
   private screenState: GameScreenState = 'ready';
   private timerInterval: number | null = null;
-  private gameStateListener: ((state: string) => void) | null = null;
+  private gameStateListener: GameListener;
   private pendingTimeouts: number[] = [];
   private lastTickSecond: number = -1;
+  private timeoutHandled: boolean = false;
 
   constructor(options: GameScreenOptions) {
     super('div');
     this.options = options;
     this.game = options.game;
     this.addClass('screen', 'game-screen');
+    
+    // Bind listener once in constructor to avoid accumulating listeners on re-render
+    this.gameStateListener = this.handleGameStateChange.bind(this);
+    this.game.addListener(this.gameStateListener);
+    
     this.render();
   }
 
@@ -74,7 +80,7 @@ export class GameScreen extends Component {
         ${this.renderPlayerIndicator(currentPlayer)}
       </div>
 
-      <div class="game-screen__question">
+      <div class="game-screen__question" role="status" aria-live="polite" aria-atomic="true">
         ${question ? question.displayText : ''}
       </div>
 
@@ -162,6 +168,7 @@ export class GameScreen extends Component {
 
   private startQuestion(): void {
     this.screenState = 'question';
+    this.timeoutHandled = false;
     const timer = this.game.getTimer();
     const timeLimit = this.game.getTimeLimit();
     
@@ -195,10 +202,6 @@ export class GameScreen extends Component {
       
       this.timerBar?.update(remaining);
     }, 100);
-    
-    // Subscribe to game state changes to react to timeout
-    this.gameStateListener = this.handleGameStateChange.bind(this);
-    this.game.addListener(this.gameStateListener);
   }
 
   private handleAnswer(answer: number, isCorrect: boolean): void {
@@ -245,8 +248,9 @@ export class GameScreen extends Component {
   }
 
   private handleTimeout(): void {
-    if (this.screenState !== 'question') return;
+    if (this.screenState !== 'question' || this.timeoutHandled) return;
     
+    this.timeoutHandled = true;
     this.screenState = 'feedback';
     this.stopTimer();
     
@@ -280,7 +284,7 @@ export class GameScreen extends Component {
   /**
    * Handle game state changes (e.g., timeout triggered by Game's timer)
    */
-  private handleGameStateChange(state: string): void {
+  private handleGameStateChange(state: GameState, _game: Game): void {
     // If game moved to feedback state while we're in question, it's a timeout
     if (state === 'feedback' && this.screenState === 'question') {
       this.handleTimeout();
@@ -388,10 +392,7 @@ export class GameScreen extends Component {
     this.pendingTimeouts = [];
     
     // Remove game state listener
-    if (this.gameStateListener) {
-      this.game.removeListener(this.gameStateListener);
-      this.gameStateListener = null;
-    }
+    this.game.removeListener(this.gameStateListener);
     
     this.timerBar?.destroy();
     this.multipleChoice?.destroy();

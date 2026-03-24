@@ -42,8 +42,12 @@ class SoundEngine {
    * Resume audio context (needed for iOS Safari)
    */
   async resume(): Promise<void> {
-    if (this.audioContext?.state === 'suspended') {
-      await this.audioContext.resume();
+    try {
+      if (this.audioContext?.state === 'suspended') {
+        await this.audioContext.resume();
+      }
+    } catch {
+      // Silently ignore - audio just won't play
     }
   }
   
@@ -78,7 +82,9 @@ class SoundEngine {
     
     // Ensure context is running
     if (this.audioContext.state === 'suspended') {
-      this.audioContext.resume();
+      this.audioContext.resume().catch(() => {
+        // Silently ignore - audio just won't play
+      });
     }
     
     switch (type) {

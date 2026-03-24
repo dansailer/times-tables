@@ -22,6 +22,7 @@ export class MultipleChoice extends Component {
   private buttons: HTMLButtonElement[] = [];
   private selectedAnswer: number | null = null;
   private disabled: boolean = false;
+  private touchHandled: boolean = false;
 
   constructor(options: MultipleChoiceOptions) {
     super('div');
@@ -63,15 +64,20 @@ export class MultipleChoice extends Component {
         }
       }
 
-      button.addEventListener('click', (e) => {
-        e.preventDefault();
-        this.selectAnswer(choice);
-      });
-      
-      // Prevent double-tap zoom on iOS
       button.addEventListener('touchend', (e) => {
         if (!this.disabled) {
           e.preventDefault();
+          this.touchHandled = true;
+          this.selectAnswer(choice);
+          // Reset flag after a short delay
+          setTimeout(() => { this.touchHandled = false; }, 100);
+        }
+      });
+      
+      button.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Only handle click if not already handled by touch
+        if (!this.touchHandled) {
           this.selectAnswer(choice);
         }
       });
