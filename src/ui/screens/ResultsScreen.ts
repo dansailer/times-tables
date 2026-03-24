@@ -24,6 +24,7 @@ export interface ResultsScreenOptions {
 export class ResultsScreen extends Component {
   private options: ResultsScreenOptions;
   private game: Game;
+  private celebrateTimeout: number | null = null;
 
   constructor(options: ResultsScreenOptions) {
     super('div');
@@ -44,9 +45,19 @@ export class ResultsScreen extends Component {
     soundEngine.play('fanfare');
     
     // Launch confetti with slight delay for dramatic effect
-    setTimeout(() => {
+    this.celebrateTimeout = window.setTimeout(() => {
       launchConfetti(80);
+      this.celebrateTimeout = null;
     }, 300);
+  }
+  
+  destroy(): void {
+    // Clear pending timeout to prevent confetti after unmount
+    if (this.celebrateTimeout !== null) {
+      clearTimeout(this.celebrateTimeout);
+      this.celebrateTimeout = null;
+    }
+    super.destroy();
   }
 
   render(): void {

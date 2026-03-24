@@ -81,6 +81,9 @@ export function launchConfetti(count: number = 50): void {
     document.body.appendChild(container);
   }
   
+  // Track max lifetime for cleanup
+  let maxLifetime = 0;
+  
   // Create confetti pieces in batches
   const batchSize = 10;
   let created = 0;
@@ -88,7 +91,11 @@ export function launchConfetti(count: number = 50): void {
   const createBatch = () => {
     const toCreate = Math.min(batchSize, count - created);
     for (let i = 0; i < toCreate; i++) {
-      createConfettiPiece(container);
+      const piece = createConfettiPiece(container);
+      // Track the longest animation duration for cleanup
+      const duration = parseFloat(piece.style.animationDuration) || 4;
+      const delay = parseFloat(piece.style.animationDelay) || 0.5;
+      maxLifetime = Math.max(maxLifetime, (duration + delay) * 1000);
     }
     created += toCreate;
     
@@ -99,12 +106,11 @@ export function launchConfetti(count: number = 50): void {
   
   createBatch();
   
-  // Clean up container after all confetti has fallen
+  // Clean up container after all confetti has definitely fallen
+  // Add extra buffer time to ensure all pieces are removed
   setTimeout(() => {
-    if (container.children.length === 0) {
-      container.remove();
-    }
-  }, 5000);
+    container.remove();
+  }, maxLifetime + 500);
 }
 
 /**

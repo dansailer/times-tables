@@ -224,7 +224,7 @@ export class GameScreen extends Component {
     this.showFeedback(isCorrect, question.correctAnswer, answer);
     
     // Apply animation to feedback area
-    const feedbackEl = this.element.querySelector('.feedback') as HTMLElement;
+    const feedbackEl = this.element.querySelector<HTMLElement>('.feedback');
     if (feedbackEl) {
       if (isCorrect) {
         pulseElement(feedbackEl);
@@ -261,7 +261,7 @@ export class GameScreen extends Component {
     // Show feedback with shake animation
     this.showFeedback(false, question.correctAnswer, null);
     
-    const feedbackEl = this.element.querySelector('.feedback') as HTMLElement;
+    const feedbackEl = this.element.querySelector<HTMLElement>('.feedback');
     if (feedbackEl) {
       shakeElement(feedbackEl);
     }

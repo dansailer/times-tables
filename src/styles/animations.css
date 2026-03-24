@@ -2,18 +2,12 @@
  * Times Tables Quest - Animations
  * 
  * CSS animations for game feedback and celebrations.
+ * Note: @keyframes shake is defined in components.css to avoid duplication.
  */
 
 /* ==========================================================================
    Keyframe Animations
    ========================================================================== */
-
-/* Shake animation for wrong answers */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-  20%, 40%, 60%, 80% { transform: translateX(5px); }
-}
 
 /* Pulse animation for correct answers */
 @keyframes pulse {
@@ -213,11 +207,11 @@
   animation: popIn 0.4s ease-out forwards;
 }
 
-.feedback--wrong {
+.feedback--incorrect {
   animation: shake 0.5s ease-in-out;
 }
 
-.feedback--wrong .feedback__icon {
+.feedback--incorrect .feedback__icon {
   animation: popIn 0.4s ease-out forwards;
 }
 
@@ -234,13 +228,13 @@
   animation-delay: 0.5s;
 }
 
-.results-stats {
+.results-screen__stats {
   animation: slideUp 0.4s ease-out forwards;
   animation-delay: 0.3s;
   opacity: 0;
 }
 
-.results-actions {
+.results-screen__actions {
   animation: fadeIn 0.4s ease-out forwards;
   animation-delay: 0.6s;
   opacity: 0;
@@ -263,7 +257,8 @@
    Timer Bar Animations
    ========================================================================== */
 
-.timer-bar--warning .timer-bar__fill {
+.timer-bar__progress.timer-bar__progress--warning,
+.timer-bar__progress.timer-bar__progress--critical {
   animation: timerWarning 0.5s ease-in-out infinite;
 }
 
