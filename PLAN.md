@@ -15,12 +15,12 @@ Each phase results in a separate PR for easy review.
 **PR**: #2
 
 ### Tasks
-- [ ] Initialize Vite + TypeScript project with pnpm
-- [ ] Configure tsconfig.json with strict mode
-- [ ] Set up vite.config.ts for GitHub Pages
-- [ ] Create base HTML structure
-- [ ] Set up CSS with theme variables
-- [ ] Create placeholder main.ts
+- [x] Initialize Vite + TypeScript project with pnpm
+- [x] Configure tsconfig.json with strict mode
+- [x] Set up vite.config.ts for GitHub Pages
+- [x] Create base HTML structure
+- [x] Set up CSS with theme variables
+- [x] Create placeholder main.ts
 
 ### Files Created
 ```
@@ -210,7 +210,7 @@ src/ui/
 
 | Phase | Status | PR | Branch |
 |-------|--------|------|--------|
-| 1. Project Setup | Pending | - | `feature/project-setup` |
+| 1. Project Setup | Complete | #2 | `feature/project-setup` |
 | 2. Core Game Logic | Pending | - | `feature/game-logic` |
 | 3. UI Components | Pending | - | `feature/ui-components` |
 | 4. Game Screens | Pending | - | `feature/screens` |
