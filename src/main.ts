@@ -6,10 +6,12 @@
 import './styles/main.css';
 import './styles/components.css';
 import './styles/screens.css';
+import './styles/animations.css';
 
 import { initI18n } from './i18n';
 import { Game } from './game/Game';
 import type { GameMode } from './game/types';
+import { soundEngine } from './audio';
 import { 
   StartScreen, 
   SetupScreen, 
@@ -32,6 +34,7 @@ class App {
   private game: Game;
   private currentScreenComponent: StartScreen | SetupScreen | GameScreen | ResultsScreen | null = null;
   private selectedMode: GameMode = 'single';
+  private soundInitialized: boolean = false;
 
   constructor() {
     const container = document.getElementById('app');
@@ -43,6 +46,27 @@ class App {
     
     // Initialize rotation system
     initRotation(this.appContainer);
+    
+    // Initialize sound on first user interaction
+    this.initSoundOnInteraction();
+  }
+  
+  /**
+   * Initialize sound engine on first user interaction (required for iOS)
+   */
+  private initSoundOnInteraction(): void {
+    const handler = () => {
+      if (!this.soundInitialized) {
+        soundEngine.init();
+        soundEngine.resume();
+        this.soundInitialized = true;
+        console.log('[App] Sound engine initialized');
+      }
+    };
+    
+    // Listen for various interaction events
+    document.addEventListener('touchstart', handler, { once: true });
+    document.addEventListener('click', handler, { once: true });
   }
 
   /**

@@ -9,6 +9,8 @@
  */
 
 import { Component } from '../components/Component';
+import { launchConfetti } from '../animations';
+import { soundEngine } from '../../audio';
 import { t, type TranslationKey } from '../../i18n';
 import type { Game } from '../../game/Game';
 import type { Player } from '../../game/types';
@@ -22,6 +24,7 @@ export interface ResultsScreenOptions {
 export class ResultsScreen extends Component {
   private options: ResultsScreenOptions;
   private game: Game;
+  private celebrateTimeout: number | null = null;
 
   constructor(options: ResultsScreenOptions) {
     super('div');
@@ -29,6 +32,32 @@ export class ResultsScreen extends Component {
     this.game = options.game;
     this.addClass('screen', 'results-screen');
     this.render();
+    
+    // Play fanfare and launch confetti on mount
+    this.celebrate();
+  }
+  
+  /**
+   * Play celebration effects
+   */
+  private celebrate(): void {
+    // Play fanfare sound
+    soundEngine.play('fanfare');
+    
+    // Launch confetti with slight delay for dramatic effect
+    this.celebrateTimeout = window.setTimeout(() => {
+      launchConfetti(80);
+      this.celebrateTimeout = null;
+    }, 300);
+  }
+  
+  destroy(): void {
+    // Clear pending timeout to prevent confetti after unmount
+    if (this.celebrateTimeout !== null) {
+      clearTimeout(this.celebrateTimeout);
+      this.celebrateTimeout = null;
+    }
+    super.destroy();
   }
 
   render(): void {
@@ -138,10 +167,12 @@ export class ResultsScreen extends Component {
 
   private bindEvents(): void {
     this.element.querySelector('#play-again')?.addEventListener('click', () => {
+      soundEngine.play('buttonClick');
       this.options.onPlayAgain();
     });
 
     this.element.querySelector('#new-game')?.addEventListener('click', () => {
+      soundEngine.play('buttonClick');
       this.options.onNewGame();
     });
   }

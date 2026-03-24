@@ -1,0 +1,276 @@
+/**
+ * Times Tables Quest - Animations
+ * 
+ * CSS animations for game feedback and celebrations.
+ * Note: @keyframes shake is defined in components.css to avoid duplication.
+ */
+
+/* ==========================================================================
+   Keyframe Animations
+   ========================================================================== */
+
+/* Pulse animation for correct answers */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* Pop-in animation for elements appearing */
+@keyframes popIn {
+  0% { 
+    transform: scale(0);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Bounce animation for celebrations */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-20px); }
+  60% { transform: translateY(-10px); }
+}
+
+/* Confetti fall animation */
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-100vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Confetti sway */
+@keyframes confettiSway {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(15px); }
+  75% { transform: translateX(-15px); }
+}
+
+/* Glow pulse for highlights */
+@keyframes glowPulse {
+  0%, 100% { 
+    box-shadow: 0 0 5px var(--color-primary);
+  }
+  50% { 
+    box-shadow: 0 0 20px var(--color-primary), 0 0 30px var(--color-primary);
+  }
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Fade out animation */
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Slide up animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Star burst for celebrations */
+@keyframes starBurst {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Timer warning pulse */
+@keyframes timerWarning {
+  0%, 100% {
+    background-color: var(--color-error);
+    transform: scaleX(var(--timer-progress, 1));
+  }
+  50% {
+    background-color: var(--color-warning);
+    transform: scaleX(var(--timer-progress, 1));
+  }
+}
+
+/* ==========================================================================
+   Animation Utility Classes
+   ========================================================================== */
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
+
+.animate-pulse {
+  animation: pulse 0.3s ease-in-out;
+}
+
+.animate-pop-in {
+  animation: popIn 0.3s ease-out forwards;
+}
+
+.animate-bounce {
+  animation: bounce 1s ease infinite;
+}
+
+.animate-glow {
+  animation: glowPulse 1.5s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.animate-fade-out {
+  animation: fadeOut 0.3s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+/* ==========================================================================
+   Confetti Container
+   ========================================================================== */
+
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  top: -20px;
+  animation: confettiFall linear forwards;
+}
+
+.confetti--circle {
+  border-radius: 50%;
+}
+
+.confetti--square {
+  border-radius: 2px;
+}
+
+.confetti--triangle {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 10px solid currentColor;
+  background: transparent !important;
+}
+
+/* ==========================================================================
+   Feedback Animations
+   ========================================================================== */
+
+.feedback--correct {
+  animation: pulse 0.3s ease-in-out;
+}
+
+.feedback--correct .feedback__icon {
+  animation: popIn 0.4s ease-out forwards;
+}
+
+.feedback--incorrect {
+  animation: shake 0.5s ease-in-out;
+}
+
+.feedback--incorrect .feedback__icon {
+  animation: popIn 0.4s ease-out forwards;
+}
+
+/* ==========================================================================
+   Results Screen Animations
+   ========================================================================== */
+
+.results-winner {
+  animation: popIn 0.5s ease-out forwards;
+}
+
+.results-winner__crown {
+  animation: bounce 1s ease infinite;
+  animation-delay: 0.5s;
+}
+
+.results-screen__stats {
+  animation: slideUp 0.4s ease-out forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+.results-screen__actions {
+  animation: fadeIn 0.4s ease-out forwards;
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+/* ==========================================================================
+   Button Press Animation
+   ========================================================================== */
+
+.btn:active,
+.setup-table-btn:active,
+.setup-option:active,
+.answer-option:active,
+.number-pad__key:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+/* ==========================================================================
+   Timer Bar Animations
+   ========================================================================== */
+
+.timer-bar__progress.timer-bar__progress--warning,
+.timer-bar__progress.timer-bar__progress--critical {
+  animation: timerWarning 0.5s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   Turn Transition Animation
+   ========================================================================== */
+
+.turn-indicator--transition {
+  animation: popIn 0.5s ease-out forwards;
+}
+
+.turn-indicator--transition .avatar {
+  animation: bounce 1s ease infinite;
+  animation-delay: 0.3s;
+}

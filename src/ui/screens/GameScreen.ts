@@ -15,6 +15,8 @@ import { TimerBar } from '../components/TimerBar';
 import { MultipleChoice } from '../components/MultipleChoice';
 import { NumberPad } from '../components/NumberPad';
 import { rotateToPlayer } from '../rotation';
+import { shakeElement, pulseElement } from '../animations';
+import { soundEngine } from '../../audio';
 import { t, type TranslationKey } from '../../i18n';
 import type { Game } from '../../game/Game';
 import type { Player } from '../../game/types';
@@ -42,6 +44,7 @@ export class GameScreen extends Component {
   private timerInterval: number | null = null;
   private gameStateListener: ((state: string) => void) | null = null;
   private pendingTimeouts: number[] = [];
+  private lastTickSecond: number = -1;
 
   constructor(options: GameScreenOptions) {
     super('div');
@@ -166,6 +169,7 @@ export class GameScreen extends Component {
     timer.reset(timeLimit);
     this.timerBar?.reset();
     timer.start();
+    this.lastTickSecond = -1;
     
     // Update timer bar on tick (UI-only; Game's timer onComplete handles timeout logic)
     this.timerInterval = window.setInterval(() => {
@@ -176,6 +180,17 @@ export class GameScreen extends Component {
         this.stopTimer();
         this.timerBar?.update(0);
         return;
+      }
+      
+      // Play tick sounds in the last 5 seconds
+      const currentSecond = Math.ceil(remaining / 1000);
+      if (currentSecond !== this.lastTickSecond && remaining <= 5000) {
+        this.lastTickSecond = currentSecond;
+        if (remaining <= 3000) {
+          soundEngine.play('tickWarning');
+        } else {
+          soundEngine.play('tick');
+        }
       }
       
       this.timerBar?.update(remaining);
@@ -192,14 +207,31 @@ export class GameScreen extends Component {
     this.screenState = 'feedback';
     this.stopTimer();
     
+    // Play sound and trigger animation
+    if (isCorrect) {
+      soundEngine.play('correct');
+    } else {
+      soundEngine.play('wrong');
+    }
+    
     // Submit answer to game
     this.game.dispatch({ type: 'ANSWER', answer });
     
     // Get the current question
     const question = this.game.getCurrentQuestion()!;
     
-    // Show feedback
+    // Show feedback with animation
     this.showFeedback(isCorrect, question.correctAnswer, answer);
+    
+    // Apply animation to feedback area
+    const feedbackEl = this.element.querySelector<HTMLElement>('.feedback');
+    if (feedbackEl) {
+      if (isCorrect) {
+        pulseElement(feedbackEl);
+      } else {
+        shakeElement(feedbackEl);
+      }
+    }
     
     // Disable answer components
     if (this.multipleChoice) {
@@ -218,13 +250,21 @@ export class GameScreen extends Component {
     this.screenState = 'feedback';
     this.stopTimer();
     
+    // Play timeout sound
+    soundEngine.play('timeout');
+    
     // Note: Game's timer already dispatched TIMEOUT via its onComplete callback
     // We just need to update the UI
     
     const question = this.game.getCurrentQuestion()!;
     
-    // Show feedback
+    // Show feedback with shake animation
     this.showFeedback(false, question.correctAnswer, null);
+    
+    const feedbackEl = this.element.querySelector<HTMLElement>('.feedback');
+    if (feedbackEl) {
+      shakeElement(feedbackEl);
+    }
     
     // Show correct answer
     if (this.multipleChoice) {

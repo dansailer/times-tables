@@ -427,6 +427,18 @@ export class Game {
     // In multi player, switch to player 2 if not done
     if (this.currentPlayerIndex === 0) {
       this.currentPlayerIndex = 1;
+      
+      // Generate a NEW question for player 2 (fairness - they shouldn't see player 1's answer)
+      this.currentQuestion = generateQuestion(
+        this.config.tables,
+        this.config.operation
+      );
+      
+      // Generate new choices for multiple choice mode
+      if (this.config.answerMode === 'choice') {
+        this.currentChoices = generateChoices(this.currentQuestion.correctAnswer);
+      }
+      
       this.showQuestion();
     } else {
       this.endRound();
