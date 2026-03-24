@@ -26,6 +26,22 @@ export {
   resetPWAPrompt,
 } from './pwa-prompt';
 
+// Animations
+export {
+  launchConfetti,
+  shakeElement,
+  pulseElement,
+  popInElement,
+  startBounce,
+  stopBounce,
+  startGlow,
+  stopGlow,
+  fadeIn,
+  fadeOut,
+  slideUp,
+  showStars,
+} from './animations';
+
 // Screens
 export {
   StartScreen,

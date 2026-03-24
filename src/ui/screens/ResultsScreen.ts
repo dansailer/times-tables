@@ -9,6 +9,8 @@
  */
 
 import { Component } from '../components/Component';
+import { launchConfetti } from '../animations';
+import { soundEngine } from '../../audio';
 import { t, type TranslationKey } from '../../i18n';
 import type { Game } from '../../game/Game';
 import type { Player } from '../../game/types';
@@ -29,6 +31,22 @@ export class ResultsScreen extends Component {
     this.game = options.game;
     this.addClass('screen', 'results-screen');
     this.render();
+    
+    // Play fanfare and launch confetti on mount
+    this.celebrate();
+  }
+  
+  /**
+   * Play celebration effects
+   */
+  private celebrate(): void {
+    // Play fanfare sound
+    soundEngine.play('fanfare');
+    
+    // Launch confetti with slight delay for dramatic effect
+    setTimeout(() => {
+      launchConfetti(80);
+    }, 300);
   }
 
   render(): void {
@@ -138,10 +156,12 @@ export class ResultsScreen extends Component {
 
   private bindEvents(): void {
     this.element.querySelector('#play-again')?.addEventListener('click', () => {
+      soundEngine.play('buttonClick');
       this.options.onPlayAgain();
     });
 
     this.element.querySelector('#new-game')?.addEventListener('click', () => {
+      soundEngine.play('buttonClick');
       this.options.onNewGame();
     });
   }

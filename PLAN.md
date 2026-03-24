@@ -229,10 +229,10 @@ src/ui/
 | 1. Project Setup | Complete | #2 | `feature/project-setup` |
 | 2. Core Game Logic | Complete | #3 | `feature/game-logic` |
 | 3. UI Components | Complete | #4 | `feature/ui-components` |
-| 4. Game Screens | Pending | - | `feature/screens` |
-| 5. Audio & Animations | Pending | - | `feature/audio-animations` |
+| 4. Game Screens | Complete | #6 | `feature/screens` |
+| 5. Audio & Animations | In Progress | #7 | `feature/audio-animations` |
 | 6. Polish & Testing | Pending | - | `feature/polish` |
-| 7. Deployment | Pending | - | `feature/deployment` |
+| 7. Deployment | Complete | - | Hardened workflow deployed |
 
 ---
 
