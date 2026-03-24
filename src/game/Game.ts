@@ -89,6 +89,7 @@ export class Game {
       difficulty: 'easy',
       answerMode: 'choice',
       rounds: 10,
+      speedWins: false, // Default: both correct = tie
       players: [
         createPlayer(1, AVATARS[0]!),
         createPlayer(2, AVATARS[1]!),
@@ -236,6 +237,10 @@ export class Game {
 
   setRounds(rounds: RoundCount): void {
     this.config.rounds = rounds;
+  }
+
+  setSpeedWins(speedWins: boolean): void {
+    this.config.speedWins = speedWins;
   }
 
   setPlayerAvatar(playerId: 1 | 2, avatar: Avatar): void {
@@ -451,8 +456,8 @@ export class Game {
       ? this.currentRoundAnswers[1] ?? null 
       : null;
 
-    // Determine winner
-    const winnerId = determineRoundWinner(player1Result, player2Result);
+    // Determine winner (pass speedWins config)
+    const winnerId = determineRoundWinner(player1Result, player2Result, this.config.speedWins);
 
     // Update rounds won
     if (winnerId !== null) {

@@ -30,6 +30,7 @@ export interface SetupConfig {
   difficulty?: Difficulty;
   answerMode?: AnswerMode;
   rounds?: RoundCount;
+  speedWins?: boolean;
   player1Avatar?: Avatar;
   player2Avatar?: Avatar;
 }
@@ -52,6 +53,7 @@ export class SetupScreen extends Component {
   private selectedDifficulty: Difficulty = 'easy';
   private selectedAnswerMode: AnswerMode = 'choice';
   private selectedRounds: RoundCount = 10;
+  private selectedSpeedWins: boolean = false;
   private player1Avatar: Avatar = AVATARS[0]!;
   private player2Avatar: Avatar = AVATARS[1]!;
 
@@ -66,6 +68,7 @@ export class SetupScreen extends Component {
     this.selectedDifficulty = options.config.difficulty;
     this.selectedAnswerMode = options.config.answerMode;
     this.selectedRounds = options.config.rounds;
+    this.selectedSpeedWins = options.config.speedWins;
     this.player1Avatar = options.config.players[0]?.avatar ?? AVATARS[0]!;
     if (options.mode === 'multi') {
       this.player2Avatar = options.config.players[1]?.avatar ?? AVATARS[1]!;
@@ -181,6 +184,29 @@ export class SetupScreen extends Component {
             `).join('')}
           </div>
         </section>
+
+        ${isTwoPlayer ? `
+        <!-- Speed Wins (Two-player only) -->
+        <section class="setup-section">
+          <h3>${t('setup.speedMode')}</h3>
+          <div class="setup-options">
+            <button 
+              class="setup-option ${!this.selectedSpeedWins ? 'setup-option--selected' : ''}" 
+              data-speed-wins="false"
+            >
+              <span class="setup-option__label">${t('setup.speedWinsOff')}</span>
+              <span class="setup-option__desc">${t('setup.speedWinsOffDesc')}</span>
+            </button>
+            <button 
+              class="setup-option ${this.selectedSpeedWins ? 'setup-option--selected' : ''}" 
+              data-speed-wins="true"
+            >
+              <span class="setup-option__label">${t('setup.speedWinsOn')}</span>
+              <span class="setup-option__desc">${t('setup.speedWinsOnDesc')}</span>
+            </button>
+          </div>
+        </section>
+        ` : ''}
       </div>
 
       <!-- Action Buttons -->
@@ -243,6 +269,15 @@ export class SetupScreen extends Component {
         const rounds = parseInt((e.currentTarget as HTMLElement).dataset.rounds!, 10) as RoundCount;
         this.selectedRounds = rounds;
         this.updateSelection('[data-rounds]', `[data-rounds="${rounds}"]`);
+      });
+    });
+
+    // Speed wins selection (two-player only)
+    this.element.querySelectorAll('[data-speed-wins]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const speedWins = (e.currentTarget as HTMLElement).dataset.speedWins === 'true';
+        this.selectedSpeedWins = speedWins;
+        this.updateSelection('[data-speed-wins]', `[data-speed-wins="${speedWins}"]`);
       });
     });
 
@@ -326,6 +361,7 @@ export class SetupScreen extends Component {
       difficulty: this.selectedDifficulty,
       answerMode: this.selectedAnswerMode,
       rounds: this.selectedRounds,
+      speedWins: this.selectedSpeedWins,
       player1Avatar: this.player1Avatar,
       player2Avatar: this.player2Avatar,
     });

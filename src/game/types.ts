@@ -77,6 +77,7 @@ export interface GameConfig {
   answerMode: AnswerMode;
   rounds: RoundCount;
   players: [Player] | [Player, Player];
+  speedWins: boolean; // If true, fastest correct answer wins; if false, both correct = tie
 }
 
 // Difficulty settings
