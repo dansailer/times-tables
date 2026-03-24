@@ -113,6 +113,10 @@ class App {
         if (config.answerMode) this.game.setAnswerMode(config.answerMode);
         if (config.rounds) this.game.setRounds(config.rounds);
         
+        // Apply avatar selections
+        if (config.player1Avatar) this.game.setPlayerAvatar(1, config.player1Avatar);
+        if (config.player2Avatar) this.game.setPlayerAvatar(2, config.player2Avatar);
+        
         // Start the game
         this.game.dispatch({ type: 'START_GAME' });
         this.showScreen('game');

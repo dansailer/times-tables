@@ -14,6 +14,7 @@ import { Component } from '../components/Component';
 import { TimerBar } from '../components/TimerBar';
 import { MultipleChoice } from '../components/MultipleChoice';
 import { NumberPad } from '../components/NumberPad';
+import { rotateToPlayer } from '../rotation';
 import { t, type TranslationKey } from '../../i18n';
 import type { Game } from '../../game/Game';
 import type { Player } from '../../game/types';
@@ -39,6 +40,8 @@ export class GameScreen extends Component {
   // Screen state
   private screenState: GameScreenState = 'ready';
   private timerInterval: number | null = null;
+  private gameStateListener: ((state: string) => void) | null = null;
+  private pendingTimeouts: number[] = [];
 
   constructor(options: GameScreenOptions) {
     super('div');
@@ -164,15 +167,23 @@ export class GameScreen extends Component {
     this.timerBar?.reset();
     timer.start();
     
-    // Update timer bar on tick
+    // Update timer bar on tick (UI-only; Game's timer onComplete handles timeout logic)
     this.timerInterval = window.setInterval(() => {
       const remaining = timer.getRemaining();
-      this.timerBar?.update(remaining);
       
       if (remaining <= 0) {
-        this.handleTimeout();
+        // Stop the UI interval; Game's timer onComplete will handle timeout
+        this.stopTimer();
+        this.timerBar?.update(0);
+        return;
       }
+      
+      this.timerBar?.update(remaining);
     }, 100);
+    
+    // Subscribe to game state changes to react to timeout
+    this.gameStateListener = this.handleGameStateChange.bind(this);
+    this.game.addListener(this.gameStateListener);
   }
 
   private handleAnswer(answer: number, isCorrect: boolean): void {
@@ -196,9 +207,9 @@ export class GameScreen extends Component {
     }
     
     // After delay, proceed to next player or round end
-    setTimeout(() => {
+    this.pendingTimeouts.push(window.setTimeout(() => {
       this.proceedAfterFeedback();
-    }, 2000);
+    }, 2000));
   }
 
   private handleTimeout(): void {
@@ -207,8 +218,8 @@ export class GameScreen extends Component {
     this.screenState = 'feedback';
     this.stopTimer();
     
-    // Submit timeout to game
-    this.game.dispatch({ type: 'TIMEOUT' });
+    // Note: Game's timer already dispatched TIMEOUT via its onComplete callback
+    // We just need to update the UI
     
     const question = this.game.getCurrentQuestion()!;
     
@@ -221,9 +232,19 @@ export class GameScreen extends Component {
     }
     
     // After delay, proceed
-    setTimeout(() => {
+    this.pendingTimeouts.push(window.setTimeout(() => {
       this.proceedAfterFeedback();
-    }, 2000);
+    }, 2000));
+  }
+  
+  /**
+   * Handle game state changes (e.g., timeout triggered by Game's timer)
+   */
+  private handleGameStateChange(state: string): void {
+    // If game moved to feedback state while we're in question, it's a timeout
+    if (state === 'feedback' && this.screenState === 'question') {
+      this.handleTimeout();
+    }
   }
 
   private stopTimer(): void {
@@ -286,6 +307,12 @@ export class GameScreen extends Component {
   private showTransition(): void {
     this.screenState = 'transition';
     const currentPlayer = this.game.getCurrentPlayer();
+    const config = this.game.getConfig();
+    
+    // Rotate screen for two-player mode
+    if (config.mode === 'multi') {
+      rotateToPlayer(currentPlayer.id as 1 | 2);
+    }
     
     // Clear screen and show transition
     this.element.innerHTML = `
@@ -298,9 +325,9 @@ export class GameScreen extends Component {
     `;
 
     // After transition delay, re-render for next player
-    setTimeout(() => {
+    this.pendingTimeouts.push(window.setTimeout(() => {
       this.render();
-    }, 2000);
+    }, 2000));
   }
 
   /**
@@ -313,6 +340,19 @@ export class GameScreen extends Component {
 
   destroy(): void {
     this.stopTimer();
+    
+    // Clear all pending timeouts
+    for (const timeoutId of this.pendingTimeouts) {
+      clearTimeout(timeoutId);
+    }
+    this.pendingTimeouts = [];
+    
+    // Remove game state listener
+    if (this.gameStateListener) {
+      this.game.removeListener(this.gameStateListener);
+      this.gameStateListener = null;
+    }
+    
     this.timerBar?.destroy();
     this.multipleChoice?.destroy();
     this.numberPad?.destroy();

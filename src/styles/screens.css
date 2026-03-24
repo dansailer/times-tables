@@ -414,7 +414,7 @@
 }
 
 @media (max-height: 600px) {
-  .setup-screen {
+  .setup-screen__content {
     gap: var(--spacing-sm);
   }
   

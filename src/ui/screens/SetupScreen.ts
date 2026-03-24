@@ -24,10 +24,20 @@ import type {
 } from '../../game/types';
 import { AVATARS } from '../../game/types';
 
+export interface SetupConfig {
+  tables?: number[];
+  operation?: Operation;
+  difficulty?: Difficulty;
+  answerMode?: AnswerMode;
+  rounds?: RoundCount;
+  player1Avatar?: Avatar;
+  player2Avatar?: Avatar;
+}
+
 export interface SetupScreenOptions {
   mode: GameMode;
   config: GameConfig;
-  onStart: (config: Partial<GameConfig>) => void;
+  onStart: (config: SetupConfig) => void;
   onBack: () => void;
 }
 
@@ -193,8 +203,10 @@ export class SetupScreen extends Component {
     this.element.querySelectorAll('[data-table]').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const table = parseInt((e.currentTarget as HTMLElement).dataset.table!, 10);
-        this.toggleTable(table);
-        (e.currentTarget as HTMLElement).classList.toggle('setup-table-btn--selected');
+        const changed = this.toggleTable(table);
+        if (changed) {
+          (e.currentTarget as HTMLElement).classList.toggle('setup-table-btn--selected');
+        }
       });
     });
 
@@ -281,14 +293,17 @@ export class SetupScreen extends Component {
     }
   }
 
-  private toggleTable(table: number): void {
+  private toggleTable(table: number): boolean {
     if (this.selectedTables.has(table)) {
       // Don't allow deselecting if it's the last one
       if (this.selectedTables.size > 1) {
         this.selectedTables.delete(table);
+        return true;
       }
+      return false;
     } else {
       this.selectedTables.add(table);
+      return true;
     }
   }
 
@@ -311,6 +326,8 @@ export class SetupScreen extends Component {
       difficulty: this.selectedDifficulty,
       answerMode: this.selectedAnswerMode,
       rounds: this.selectedRounds,
+      player1Avatar: this.player1Avatar,
+      player2Avatar: this.player2Avatar,
     });
   }
 
