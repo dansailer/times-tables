@@ -92,6 +92,11 @@ export const en = {
   // Misc
   'misc.vs': 'VS',
   'misc.loading': 'Loading...',
+
+  // PWA / Add to Home Screen
+  'pwa.title': 'Play Fullscreen!',
+  'pwa.instructions': 'Tap {{icon}} then "Add to Home Screen"',
+  'pwa.dismiss': 'Maybe Later',
 } as const;
 
 export type TranslationKey = keyof typeof en;

@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**Times Tables Quest** is a browser-based educational game for training multiplication and division tables. It is designed for 8-11 year olds and runs on iPad in fullscreen mode.
+**Times Tables Quest** is a browser-based educational game for training multiplication and division tables. It is designed for 8-11 year olds and runs on iPad and iPhone in fullscreen mode (via Add to Home Screen).
 
 ### Key Features
 - Two-player competitive mode (screen rotates 180° between turns)
@@ -14,6 +14,8 @@
 - Gamification with speed bonuses (hard mode only)
 - Synthesized sound effects using Web Audio API
 - Internationalization (i18n) with automatic language detection
+- PWA support with Add to Home Screen prompt for fullscreen
+- Responsive design for iPad and iPhone
 
 ## Technical Stack
 
@@ -110,7 +112,8 @@ Configurable: 5, 10, or 15 rounds per game
 
 ## Testing Guidelines
 - Test on iPad Safari (primary target)
+- Test on iPhone Safari (responsive design)
 - Verify touch interactions
-- Test fullscreen mode
+- Test fullscreen mode (Add to Home Screen)
 - Check 180° rotation transitions
 - Validate all times tables combinations

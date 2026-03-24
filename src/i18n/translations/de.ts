@@ -94,4 +94,9 @@ export const de: Record<TranslationKey, string> = {
   // Misc
   'misc.vs': 'VS',
   'misc.loading': 'Laden...',
+
+  // PWA / Add to Home Screen
+  'pwa.title': 'Vollbild spielen!',
+  'pwa.instructions': 'Tippe auf {{icon}} dann "Zum Home-Bildschirm"',
+  'pwa.dismiss': 'Später',
 };

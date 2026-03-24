@@ -9,6 +9,7 @@
   width: 100%;
   max-width: 400px;
   height: 24px;
+  margin: 0 auto;
   background: var(--color-bg-dark);
   border-radius: var(--border-radius-md);
   overflow: hidden;
@@ -56,6 +57,7 @@
   gap: var(--spacing-md);
   width: 100%;
   max-width: 320px;
+  margin: 0 auto;
 }
 
 .number-pad__display {
@@ -109,13 +111,13 @@
 
 .number-pad__key--action {
   background: linear-gradient(180deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
 }
 
 .number-pad__key--submit {
   background: linear-gradient(180deg, var(--color-gold) 0%, var(--color-gold-dark) 100%);
   color: var(--color-bg-dark);
-  font-size: var(--font-size-md);
+  font-size: var(--font-size-sm);
 }
 
 /* ===== Multiple Choice ===== */
@@ -126,6 +128,7 @@
   gap: var(--spacing-md);
   width: 100%;
   max-width: 400px;
+  margin: 0 auto;
 }
 
 .multiple-choice__option {
@@ -369,4 +372,96 @@
 .score-display--active {
   border-color: var(--color-gold);
   box-shadow: var(--shadow-glow);
+}
+
+/* ===== iPhone Responsive Adjustments ===== */
+
+/* Small phones */
+@media (max-width: 374px) {
+  .number-pad {
+    max-width: 260px;
+  }
+  
+  .number-pad__display {
+    padding: var(--spacing-md);
+    font-size: var(--font-size-xl);
+    min-height: 60px;
+  }
+  
+  .number-pad__key {
+    font-size: var(--font-size-lg);
+  }
+  
+  .multiple-choice__option {
+    min-width: 80px;
+    min-height: 60px;
+    padding: var(--spacing-md);
+    font-size: var(--font-size-lg);
+  }
+  
+  .avatar-picker__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-xs);
+  }
+  
+  .avatar-picker__emoji {
+    font-size: 24px;
+  }
+  
+  .avatar-picker__name {
+    font-size: 10px;
+  }
+  
+  .timer-bar {
+    height: 20px;
+  }
+}
+
+/* Standard phones */
+@media (min-width: 375px) and (max-width: 430px) {
+  .number-pad {
+    max-width: 280px;
+  }
+  
+  .number-pad__key {
+    font-size: var(--font-size-lg);
+  }
+  
+  .multiple-choice__option {
+    min-width: 90px;
+    min-height: 70px;
+  }
+  
+  .avatar-picker__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .avatar-picker__emoji {
+    font-size: 28px;
+  }
+}
+
+/* Short screens */
+@media (max-height: 600px) {
+  .number-pad__display {
+    padding: var(--spacing-sm);
+    min-height: 50px;
+  }
+  
+  .number-pad__keys {
+    gap: var(--spacing-xs);
+  }
+  
+  .multiple-choice {
+    gap: var(--spacing-sm);
+  }
+  
+  .multiple-choice__option {
+    min-height: 50px;
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  .turn-indicator {
+    padding: var(--spacing-md);
+  }
 }
