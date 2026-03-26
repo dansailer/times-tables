@@ -78,7 +78,7 @@ function generateDivision(tables: number[]): Question {
  * Generate a new question avoiding recent duplicates
  * 
  * @param tables - Array of times tables to use (e.g., [2, 3, 5])
- * @param operation - 'multiply' or 'divide'
+ * @param operation - 'multiply', 'divide', or 'both'
  * @returns Generated question
  */
 export function generateQuestion(tables: number[], operation: Operation): Question {
@@ -93,8 +93,14 @@ export function generateQuestion(tables: number[], operation: Operation): Questi
     validTables.push(2, 3, 4, 5, 6, 7, 8, 9, 10);
   }
   
+  // If 'both' is selected, randomly pick multiply or divide for each question
+  const effectiveOperation: 'multiply' | 'divide' = 
+    operation === 'both' 
+      ? (Math.random() > 0.5 ? 'multiply' : 'divide')
+      : operation;
+  
   do {
-    question = operation === 'multiply' 
+    question = effectiveOperation === 'multiply' 
       ? generateMultiplication(validTables)
       : generateDivision(validTables);
     
