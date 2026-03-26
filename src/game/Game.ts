@@ -265,6 +265,7 @@ export class Game {
         if (event.config.difficulty) this.setDifficulty(event.config.difficulty);
         if (event.config.answerMode) this.setAnswerMode(event.config.answerMode);
         if (event.config.rounds) this.setRounds(event.config.rounds);
+        if (event.config.speedWins !== undefined) this.setSpeedWins(event.config.speedWins);
         break;
 
       case 'START_GAME':
