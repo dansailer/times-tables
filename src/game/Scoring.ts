@@ -127,11 +127,13 @@ export function createAnswerResult(
  * 
  * @param player1Result - Player 1's answer result
  * @param player2Result - Player 2's answer result (null for single player)
+ * @param speedWins - If true, fastest correct answer wins; if false, both correct = tie
  * @returns Winner ID (1, 2, or null for tie/both wrong)
  */
 export function determineRoundWinner(
   player1Result: AnswerResult,
-  player2Result: AnswerResult | null
+  player2Result: AnswerResult | null,
+  speedWins: boolean = false
 ): 1 | 2 | null {
   // Single player mode - win if correct
   if (player2Result === null) {
@@ -153,7 +155,12 @@ export function determineRoundWinner(
     return 2;
   }
 
-  // Both correct - fastest wins
+  // Both correct - if speedWins is enabled, fastest wins; otherwise it's a tie
+  if (!speedWins) {
+    return null; // Both answered correctly = tie (default behavior)
+  }
+
+  // Speed-based winner determination
   if (player1Result.timeTaken < player2Result.timeTaken) {
     return 1;
   } else if (player2Result.timeTaken < player1Result.timeTaken) {

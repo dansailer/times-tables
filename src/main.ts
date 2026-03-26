@@ -137,6 +137,7 @@ class App {
         if (config.difficulty) this.game.setDifficulty(config.difficulty);
         if (config.answerMode) this.game.setAnswerMode(config.answerMode);
         if (config.rounds) this.game.setRounds(config.rounds);
+        if (config.speedWins !== undefined) this.game.setSpeedWins(config.speedWins);
         
         // Apply avatar selections
         if (config.player1Avatar) this.game.setPlayerAvatar(1, config.player1Avatar);

@@ -24,6 +24,11 @@ export const en = {
   'setup.selectRounds': 'Rounds',
   'setup.player1': 'Player 1',
   'setup.player2': 'Player 2',
+  'setup.speedMode': 'Winner Mode',
+  'setup.speedWinsOff': 'Standard',
+  'setup.speedWinsOffDesc': 'Both correct = Tie',
+  'setup.speedWinsOn': 'Speed Wins',
+  'setup.speedWinsOnDesc': 'Fastest answer wins',
   'setup.startGame': 'Start Quest!',
   'setup.back': 'Back',
 

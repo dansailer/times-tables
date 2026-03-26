@@ -26,6 +26,11 @@ export const de: Record<TranslationKey, string> = {
   'setup.selectRounds': 'Runden',
   'setup.player1': 'Spieler 1',
   'setup.player2': 'Spieler 2',
+  'setup.speedMode': 'Gewinnermodus',
+  'setup.speedWinsOff': 'Standard',
+  'setup.speedWinsOffDesc': 'Beide richtig = Unentschieden',
+  'setup.speedWinsOn': 'Schnellster gewinnt',
+  'setup.speedWinsOnDesc': 'Schnellste Antwort gewinnt',
   'setup.startGame': 'Quest starten!',
   'setup.back': 'Zurück',
 
