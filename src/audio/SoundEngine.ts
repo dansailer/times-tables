@@ -35,6 +35,8 @@ class SoundEngine {
       this.masterGain.gain.value = 0.5;
       this.initialized = true;
     } catch {
+      // Mark as initialized to avoid repeated failing attempts; disable audio
+      this.initialized = true;
       this.enabled = false;
     }
   }
