@@ -4,19 +4,7 @@
  * JavaScript helpers for triggering and managing animations.
  */
 
-/**
- * Confetti colors for celebrations
- */
-const CONFETTI_COLORS = [
-  '#FFD700', // Gold
-  '#FF6B6B', // Red
-  '#4ECDC4', // Teal
-  '#45B7D1', // Blue
-  '#96CEB4', // Green
-  '#FFEAA7', // Yellow
-  '#DDA0DD', // Plum
-  '#98D8C8', // Mint
-];
+import { CONFETTI_COLORS } from './constants';
 
 /**
  * Confetti shapes

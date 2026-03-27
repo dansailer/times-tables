@@ -9,7 +9,7 @@ import { en, type TranslationKey } from './translations/en';
 import { de } from './translations/de';
 
 // Supported languages
-export type Language = 'en' | 'de';
+type Language = 'en' | 'de';
 
 // Translation dictionaries
 const translations: Record<Language, Record<TranslationKey, string>> = {
@@ -41,30 +41,11 @@ function detectLanguage(): Language {
 /**
  * Initialize i18n system with browser language detection
  */
-export function initI18n(): Language {
+export function initI18n(): void {
   currentLanguage = detectLanguage();
   
   // Update document language attribute
   document.documentElement.lang = currentLanguage;
-  
-  return currentLanguage;
-}
-
-/**
- * Get current language
- */
-export function getLanguage(): Language {
-  return currentLanguage;
-}
-
-/**
- * Set language manually
- */
-export function setLanguage(lang: Language): void {
-  if (translations[lang]) {
-    currentLanguage = lang;
-    document.documentElement.lang = lang;
-  }
 }
 
 /**
@@ -97,13 +78,6 @@ export function t(key: TranslationKey, params?: Record<string, string | number>)
   }
   
   return text;
-}
-
-/**
- * Get all available languages
- */
-export function getAvailableLanguages(): Language[] {
-  return Object.keys(translations) as Language[];
 }
 
 // Re-export types

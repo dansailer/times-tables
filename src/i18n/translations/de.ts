@@ -13,8 +13,6 @@ export const de: Record<TranslationKey, string> = {
   // Start screen
   'start.singlePlayer': 'Einzelspieler',
   'start.twoPlayer': 'Zwei Spieler',
-  'start.practice': 'Übungsmodus',
-  'start.battle': 'Kampfmodus',
   'start.howToPlay': 'So geht\'s',
   'start.howToPlay1': 'Wähle Einmaleins-Reihen (2-11)',
   'start.howToPlay2': 'Beantworte Multiplikation oder Division',
@@ -64,15 +62,12 @@ export const de: Record<TranslationKey, string> = {
   // Game screen
   'game.round': 'Runde',
   'game.of': 'von',
-  'game.score': 'Punkte',
   'game.yourTurn': 'Du bist dran!',
   'game.getReady': 'Mach dich bereit...',
   'game.timeUp': 'Zeit abgelaufen!',
   'game.correct': 'Richtig!',
   'game.incorrect': 'Falsch',
   'game.theAnswerWas': 'Die Antwort war',
-  'game.speedBonus': 'Geschwindigkeitsbonus!',
-  'game.streak': 'Serie',
   'game.points': 'Punkte',
   'game.enter': 'Eingabe',
   'game.clear': 'Löschen',
@@ -81,8 +76,6 @@ export const de: Record<TranslationKey, string> = {
   'results.title': 'Quest abgeschlossen!',
   'results.winner': 'Gewinner',
   'results.tie': 'Unentschieden!',
-  'results.player1Wins': 'Spieler 1 gewinnt!',
-  'results.player2Wins': 'Spieler 2 gewinnt!',
   'results.finalScore': 'Endpunktzahl',
   'results.roundsWon': 'Gewonnene Runden',
   'results.accuracy': 'Genauigkeit',
@@ -106,10 +99,6 @@ export const de: Record<TranslationKey, string> = {
   'avatar.unicorn': 'Einhorn',
   'avatar.ninja': 'Ninja',
   'avatar.cat': 'Katze',
-
-  // Misc
-  'misc.vs': 'VS',
-  'misc.loading': 'Laden...',
 
   // Celebrations & Encouragement
   'celebration.correct1': 'Super!',

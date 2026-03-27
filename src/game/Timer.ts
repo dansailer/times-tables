@@ -90,34 +90,6 @@ export class Timer {
   }
 
   /**
-   * Pause the timer
-   */
-  pause(): void {
-    this.stop();
-    // remaining is already updated to current value
-  }
-
-  /**
-   * Resume a paused timer
-   */
-  resume(): void {
-    if (this.remaining > 0 && this.timerId === null) {
-      // Adjust startTime to account for already elapsed time
-      // This keeps duration unchanged so progress calculation remains correct
-      const elapsed = this.duration - this.remaining;
-      this.startTime = performance.now() - elapsed;
-      
-      // Set up interval for updates
-      this.timerId = window.setInterval(() => {
-        this.tick();
-      }, this.tickInterval);
-      
-      // Initial tick
-      this.tick();
-    }
-  }
-
-  /**
    * Reset the timer to initial state
    * 
    * @param newDuration - Optional new duration
@@ -139,45 +111,6 @@ export class Timer {
    */
   getRemaining(): number {
     return this.remaining;
-  }
-
-  /**
-   * Get elapsed time in milliseconds
-   */
-  getElapsed(): number {
-    return this.duration - this.remaining;
-  }
-
-  /**
-   * Get remaining time as percentage (0-1)
-   */
-  getProgress(): number {
-    return this.remaining / this.duration;
-  }
-
-  /**
-   * Check if timer is running
-   */
-  isRunning(): boolean {
-    return this.timerId !== null;
-  }
-
-  /**
-   * Set warning threshold
-   * 
-   * @param threshold - Threshold in milliseconds
-   */
-  setWarningThreshold(threshold: number): void {
-    this.warningThreshold = threshold;
-  }
-
-  /**
-   * Update callbacks
-   * 
-   * @param callbacks - New callback functions
-   */
-  setCallbacks(callbacks: TimerCallbacks): void {
-    this.callbacks = { ...this.callbacks, ...callbacks };
   }
 
   /**
