@@ -35,6 +35,13 @@
   overflow-y: auto;
   max-height: 100%;
   padding-bottom: var(--spacing-xxl);
+  /* Hide scrollbar but allow scrolling */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.setup-screen::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .setup-screen__content {
