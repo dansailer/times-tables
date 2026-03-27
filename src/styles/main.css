@@ -1,5 +1,5 @@
 /* Times Tables Quest - Main Styles */
-/* Adventure Quest Theme for 8-11 year olds */
+/* Ocean Adventure Theme for 8-11 year olds */
 
 /* ===== CSS Custom Properties ===== */
 :root {
@@ -9,6 +9,7 @@
   --color-primary-light: #33aaee;
   
   /* Accent Colors */
+  /* Note: "gold" variables represent the teal accent color (treasure theme) */
   --color-gold: #00d4aa;
   --color-gold-dark: #00a080;
   --color-treasure: #40e0d0;
