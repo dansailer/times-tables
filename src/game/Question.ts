@@ -95,10 +95,10 @@ export function generateQuestion(tables: number[], operation: Operation): Questi
   const maxAttempts = 30;
   
   // Ensure we have valid tables
-  const validTables = tables.filter(t => t >= 2 && t <= 10);
+  const validTables = tables.filter(t => t >= 2 && t <= 11);
   if (validTables.length === 0) {
     // Fallback to all tables if none valid
-    validTables.push(2, 3, 4, 5, 6, 7, 8, 9, 10);
+    validTables.push(2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
   }
   
   // If 'both' is selected, randomly pick multiply or divide for each question

@@ -3,7 +3,7 @@
  * 
  * Game configuration screen for selecting:
  * - Player avatars
- * - Times tables (2-10)
+ * - Times tables (2-11)
  * - Operation (multiply/divide/both)
  * - Difficulty (easy/medium/hard)
  * - Answer mode (choice/input)
@@ -48,7 +48,7 @@ export class SetupScreen extends Component {
   private avatarPicker2: AvatarPicker | null = null;
   
   // Selected values
-  private selectedTables: Set<number> = new Set([2, 3, 4, 5]);
+  private selectedTables: Set<number> = new Set([2, 3, 4, 5, 11]);
   private selectedOperation: Operation = 'multiply';
   private selectedDifficulty: Difficulty = 'easy';
   private selectedAnswerMode: AnswerMode = 'choice';
@@ -105,7 +105,7 @@ export class SetupScreen extends Component {
         <section class="setup-section">
           <h3>${t('setup.selectTables')}</h3>
           <div class="setup-tables">
-            ${[2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => `
+            ${[2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => `
               <button 
                 class="setup-table-btn ${this.selectedTables.has(n) ? 'setup-table-btn--selected' : ''}" 
                 data-table="${n}"

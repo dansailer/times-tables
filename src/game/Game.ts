@@ -84,7 +84,7 @@ export class Game {
     // Default configuration
     this.config = {
       mode: 'multi',
-      tables: [2, 3, 4, 5, 6, 7, 8, 9, 10],
+      tables: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
       operation: 'multiply',
       difficulty: 'easy',
       answerMode: 'choice',
