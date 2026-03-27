@@ -3,11 +3,11 @@
  * 
  * Game configuration screen for selecting:
  * - Player avatars
- * - Times tables (2-10)
- * - Operation (multiply/divide)
+ * - Times tables (2-11)
+ * - Operation (multiply/divide/both)
  * - Difficulty (easy/medium/hard)
  * - Answer mode (choice/input)
- * - Number of rounds (5/10/15)
+ * - Number of rounds (10/20/30)
  */
 
 import { Component } from '../components/Component';
@@ -48,7 +48,7 @@ export class SetupScreen extends Component {
   private avatarPicker2: AvatarPicker | null = null;
   
   // Selected values
-  private selectedTables: Set<number> = new Set([2, 3, 4, 5]);
+  private selectedTables: Set<number> = new Set([2, 3, 4, 5, 11]);
   private selectedOperation: Operation = 'multiply';
   private selectedDifficulty: Difficulty = 'easy';
   private selectedAnswerMode: AnswerMode = 'choice';
@@ -105,7 +105,7 @@ export class SetupScreen extends Component {
         <section class="setup-section">
           <h3>${t('setup.selectTables')}</h3>
           <div class="setup-tables">
-            ${[2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => `
+            ${[2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(n => `
               <button 
                 class="setup-table-btn ${this.selectedTables.has(n) ? 'setup-table-btn--selected' : ''}" 
                 data-table="${n}"
@@ -180,7 +180,7 @@ export class SetupScreen extends Component {
         <section class="setup-section">
           <h3>${t('setup.selectRounds')}</h3>
           <div class="setup-options">
-            ${([5, 10, 15] as RoundCount[]).map(r => `
+            ${([10, 20, 30] as RoundCount[]).map(r => `
               <button 
                 class="setup-option ${this.selectedRounds === r ? 'setup-option--selected' : ''}" 
                 data-rounds="${r}"
