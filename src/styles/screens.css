@@ -30,6 +30,41 @@
   max-width: 300px;
 }
 
+.start-screen__how-to-play {
+  background: var(--color-bg-dark);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  border: 2px solid var(--color-primary-light);
+  max-width: 350px;
+  text-align: left;
+}
+
+.start-screen__how-to-play h3 {
+  color: var(--color-primary-light);
+  font-size: var(--font-size-md);
+  margin: 0 0 var(--spacing-sm) 0;
+  text-align: center;
+}
+
+.start-screen__how-to-play ul {
+  margin: 0;
+  padding-left: var(--spacing-lg);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.start-screen__how-to-play li {
+  margin-bottom: var(--spacing-xs);
+}
+
+.start-screen__hint {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  margin: var(--spacing-xs) 0 0 0;
+  opacity: 0.8;
+}
+
 /* ===== Setup Screen ===== */
 .setup-screen {
   overflow-y: auto;
