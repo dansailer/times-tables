@@ -220,7 +220,7 @@ export class Game {
   }
 
   setTables(tables: number[]): void {
-    this.config.tables = tables.filter(t => t >= 2 && t <= 10);
+    this.config.tables = tables.filter(t => t >= 2 && t <= 11);
   }
 
   setOperation(operation: Operation): void {

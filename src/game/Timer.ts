@@ -7,7 +7,8 @@
 import type { TimerCallbacks } from './types';
 
 export class Timer {
-  private duration: number; // Total duration in ms
+  private originalDuration: number; // Original duration for reset
+  private duration: number; // Current countdown duration in ms
   private remaining: number; // Remaining time in ms
   private startTime: number = 0;
   private timerId: number | null = null;
@@ -23,6 +24,7 @@ export class Timer {
    * @param callbacks - Callback functions for timer events
    */
   constructor(duration: number, callbacks: TimerCallbacks = {}) {
+    this.originalDuration = duration;
     this.duration = duration;
     this.remaining = duration;
     this.callbacks = callbacks;
@@ -99,9 +101,19 @@ export class Timer {
    * Resume a paused timer
    */
   resume(): void {
-    if (this.remaining > 0) {
-      this.duration = this.remaining;
-      this.start();
+    if (this.remaining > 0 && this.timerId === null) {
+      // Adjust startTime to account for already elapsed time
+      // This keeps duration unchanged so progress calculation remains correct
+      const elapsed = this.duration - this.remaining;
+      this.startTime = performance.now() - elapsed;
+      
+      // Set up interval for updates
+      this.timerId = window.setInterval(() => {
+        this.tick();
+      }, this.tickInterval);
+      
+      // Initial tick
+      this.tick();
     }
   }
 
@@ -113,7 +125,10 @@ export class Timer {
   reset(newDuration?: number): void {
     this.stop();
     if (newDuration !== undefined) {
+      this.originalDuration = newDuration;
       this.duration = newDuration;
+    } else {
+      this.duration = this.originalDuration;
     }
     this.remaining = this.duration;
     this.warningFired = false;

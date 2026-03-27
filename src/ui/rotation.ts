@@ -77,29 +77,36 @@ export function animateRotation(state: RotationState, onComplete?: () => void): 
     return;
   }
 
+  // Guard to prevent double callback
+  let completed = false;
+  
+  // Declare handler first to avoid TDZ issues
+  let handleTransitionEnd: (e: TransitionEvent) => void;
+  
+  const complete = () => {
+    if (completed) return;
+    completed = true;
+    rotationElement?.classList.remove('rotatable--animating');
+    rotationElement?.removeEventListener('transitionend', handleTransitionEnd);
+    onComplete?.();
+  };
+  
+  handleTransitionEnd = (e: TransitionEvent) => {
+    if (e.propertyName === 'transform') {
+      complete();
+    }
+  };
+
   // Add transition class for animation
   rotationElement.classList.add('rotatable--animating');
   
   // Set rotation
   setRotation(state);
 
-  // Wait for animation to complete
-  const handleTransitionEnd = (e: TransitionEvent) => {
-    if (e.propertyName === 'transform') {
-      rotationElement?.classList.remove('rotatable--animating');
-      rotationElement?.removeEventListener('transitionend', handleTransitionEnd);
-      onComplete?.();
-    }
-  };
-
   rotationElement.addEventListener('transitionend', handleTransitionEnd);
 
   // Fallback timeout in case transition doesn't fire
-  setTimeout(() => {
-    rotationElement?.classList.remove('rotatable--animating');
-    rotationElement?.removeEventListener('transitionend', handleTransitionEnd);
-    onComplete?.();
-  }, 600);
+  setTimeout(complete, 600);
 }
 
 /**

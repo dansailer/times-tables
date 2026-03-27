@@ -218,3 +218,14 @@ class App {
 // Initialize and start app
 const app = new App();
 app.start();
+
+// Register service worker for offline support
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    // Use Vite's BASE_URL to support different deployment paths
+    const swUrl = `${import.meta.env.BASE_URL}sw.js`;
+    navigator.serviceWorker.register(swUrl).catch(() => {
+      // Service worker registration failed - app still works online
+    });
+  });
+}
