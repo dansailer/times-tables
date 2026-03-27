@@ -132,7 +132,7 @@ class CelebrationEngine {
       this.spawnConfetti(Math.min(100, 30 + streak * 5));
     } else if (celebrationStyle < 0.9) {
       // 20% chance: confetti rain from top
-      this.spawnConfettiRain(40 + streak * 3);
+      this.spawnConfettiRain(Math.min(120, 40 + streak * 3));
     }
     // 10% chance: no confetti, just message
 
@@ -180,27 +180,43 @@ class CelebrationEngine {
    * Spawn confetti particles falling from top (rain effect)
    */
   private spawnConfettiRain(count: number): void {
-    for (let i = 0; i < count; i++) {
-      // Stagger spawn times
-      setTimeout(() => {
-        this.particles.push({
-          x: Math.random() * window.innerWidth,
-          y: -20,
-          vx: (Math.random() - 0.5) * 2,
-          vy: 3 + Math.random() * 3,
-          color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]!,
-          size: 6 + Math.random() * 6,
-          rotation: Math.random() * Math.PI * 2,
-          rotationSpeed: (Math.random() - 0.5) * 0.2,
-          life: 0,
-          maxLife: 120 + Math.random() * 60,
-        });
-        
-        // Ensure animation is running
-        if (this.animationFrame === null) {
-          this.animate();
-        }
-      }, i * 30); // Stagger by 30ms each
+    if (count <= 0) {
+      return;
+    }
+
+    let spawned = 0;
+    let intervalId: number | null = null;
+
+    const spawnParticle = () => {
+      this.particles.push({
+        x: Math.random() * window.innerWidth,
+        y: -20,
+        vx: (Math.random() - 0.5) * 2,
+        vy: 3 + Math.random() * 3,
+        color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]!,
+        size: 6 + Math.random() * 6,
+        rotation: Math.random() * Math.PI * 2,
+        rotationSpeed: (Math.random() - 0.5) * 0.2,
+        life: 0,
+        maxLife: 120 + Math.random() * 60,
+      });
+
+      // Ensure animation is running
+      if (this.animationFrame === null) {
+        this.animate();
+      }
+
+      spawned += 1;
+      if (spawned >= count && intervalId !== null) {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    };
+
+    // Spawn first particle immediately, then stagger subsequent ones
+    spawnParticle();
+    if (spawned < count) {
+      intervalId = window.setInterval(spawnParticle, 30); // Stagger by 30ms each
     }
   }
 
