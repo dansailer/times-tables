@@ -11,8 +11,6 @@ export const en = {
   // Start screen
   'start.singlePlayer': 'Single Player',
   'start.twoPlayer': 'Two Players',
-  'start.practice': 'Practice Mode',
-  'start.battle': 'Battle Mode',
   'start.howToPlay': 'How to Play',
   'start.howToPlay1': 'Choose times tables to practice (2-11)',
   'start.howToPlay2': 'Answer multiplication or division questions',
@@ -62,15 +60,12 @@ export const en = {
   // Game screen
   'game.round': 'Round',
   'game.of': 'of',
-  'game.score': 'Score',
   'game.yourTurn': 'Your Turn!',
   'game.getReady': 'Get Ready...',
   'game.timeUp': "Time's Up!",
   'game.correct': 'Correct!',
   'game.incorrect': 'Incorrect',
   'game.theAnswerWas': 'The answer was',
-  'game.speedBonus': 'Speed Bonus!',
-  'game.streak': 'Streak',
   'game.points': 'points',
   'game.enter': 'Enter',
   'game.clear': 'Clear',
@@ -79,8 +74,6 @@ export const en = {
   'results.title': 'Quest Complete!',
   'results.winner': 'Winner',
   'results.tie': "It's a Tie!",
-  'results.player1Wins': 'Player 1 Wins!',
-  'results.player2Wins': 'Player 2 Wins!',
   'results.finalScore': 'Final Score',
   'results.roundsWon': 'Rounds Won',
   'results.accuracy': 'Accuracy',
@@ -104,10 +97,6 @@ export const en = {
   'avatar.unicorn': 'Unicorn',
   'avatar.ninja': 'Ninja',
   'avatar.cat': 'Cat',
-
-  // Misc
-  'misc.vs': 'VS',
-  'misc.loading': 'Loading...',
 
   // Celebrations & Encouragement
   'celebration.correct1': 'Awesome!',

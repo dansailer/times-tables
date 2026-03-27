@@ -9,6 +9,7 @@
  */
 
 import { t, type TranslationKey } from '../i18n';
+import { CONFETTI_COLORS } from './constants';
 
 // Confetti particle interface
 interface Particle {
@@ -23,18 +24,6 @@ interface Particle {
   life: number;
   maxLife: number;
 }
-
-// Celebration colors (ocean theme inspired)
-const CONFETTI_COLORS = [
-  '#FFD700', // Gold
-  '#FF6B6B', // Coral
-  '#4ECDC4', // Teal
-  '#45B7D1', // Sky blue
-  '#96CEB4', // Mint
-  '#FFEAA7', // Light yellow
-  '#DDA0DD', // Plum
-  '#98D8C8', // Sea green
-];
 
 // Encouraging messages (random selection)
 const CORRECT_MESSAGE_KEYS: TranslationKey[] = [
@@ -135,8 +124,17 @@ class CelebrationEngine {
    * @param isRotated Whether to rotate 180° for player 2
    */
   celebrate(streak: number, isFast: boolean = false, isRotated: boolean = false): void {
-    // Show confetti (capped at 150 to prevent performance issues)
-    this.spawnConfetti(Math.min(150, 50 + streak * 10));
+    // Randomly choose celebration style
+    const celebrationStyle = Math.random();
+    
+    if (celebrationStyle < 0.7) {
+      // 70% chance: confetti burst from center
+      this.spawnConfetti(Math.min(100, 30 + streak * 5));
+    } else if (celebrationStyle < 0.9) {
+      // 20% chance: confetti rain from top
+      this.spawnConfettiRain(40 + streak * 3);
+    }
+    // 10% chance: no confetti, just message
 
     // Show encouraging message
     this.showMessage(streak, isFast, isRotated);
@@ -153,7 +151,7 @@ class CelebrationEngine {
   }
 
   /**
-   * Spawn confetti particles
+   * Spawn confetti particles from center (burst effect)
    */
   private spawnConfetti(count: number): void {
     const centerX = window.innerWidth / 2;
@@ -175,6 +173,34 @@ class CelebrationEngine {
         life: 0,
         maxLife: 80 + Math.random() * 40,
       });
+    }
+  }
+
+  /**
+   * Spawn confetti particles falling from top (rain effect)
+   */
+  private spawnConfettiRain(count: number): void {
+    for (let i = 0; i < count; i++) {
+      // Stagger spawn times
+      setTimeout(() => {
+        this.particles.push({
+          x: Math.random() * window.innerWidth,
+          y: -20,
+          vx: (Math.random() - 0.5) * 2,
+          vy: 3 + Math.random() * 3,
+          color: CONFETTI_COLORS[Math.floor(Math.random() * CONFETTI_COLORS.length)]!,
+          size: 6 + Math.random() * 6,
+          rotation: Math.random() * Math.PI * 2,
+          rotationSpeed: (Math.random() - 0.5) * 0.2,
+          life: 0,
+          maxLife: 120 + Math.random() * 60,
+        });
+        
+        // Ensure animation is running
+        if (this.animationFrame === null) {
+          this.animate();
+        }
+      }, i * 30); // Stagger by 30ms each
     }
   }
 
