@@ -95,16 +95,26 @@ self.addEventListener('fetch', (event) => {
         // Cache the response for future offline use
         if (shouldCache(event.request, response)) {
           const responseToCache = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
+          event.waitUntil(
+            caches.open(CACHE_NAME)
+              .then((cache) => cache.put(event.request, responseToCache))
+              .catch((error) => {
+                // Ignore quota / cache errors but avoid unhandled rejections
+                console.error('Service worker cache put failed:', error);
+              })
+          );
         }
 
         return response;
       }).catch(() => {
         // Network failed and no cache - return offline fallback for navigation
         if (event.request.mode === 'navigate') {
-          return caches.match('index.html');
+          return caches.match('index.html').then((offlinePage) => {
+            if (offlinePage) {
+              return offlinePage;
+            }
+            return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
+          });
         }
         // For other requests, just fail
         return new Response('Offline', { status: 503, statusText: 'Service Unavailable' });
