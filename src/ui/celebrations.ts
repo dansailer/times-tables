@@ -55,6 +55,7 @@ class CelebrationEngine {
   private animationFrame: number | null = null;
   private messageElement: HTMLElement | null = null;
   private streakElement: HTMLElement | null = null;
+  private boundResize: () => void = () => {};
 
   /**
    * Initialize the celebration engine
@@ -113,7 +114,8 @@ class CelebrationEngine {
     document.body.appendChild(this.streakElement);
 
     // Handle resize
-    window.addEventListener('resize', this.resize.bind(this));
+    this.boundResize = this.resize.bind(this);
+    window.addEventListener('resize', this.boundResize);
   }
 
   /**
@@ -130,8 +132,8 @@ class CelebrationEngine {
    * Trigger celebration for correct answer
    */
   celebrate(streak: number, isFast: boolean = false): void {
-    // Show confetti
-    this.spawnConfetti(50 + streak * 10); // More confetti for higher streaks
+    // Show confetti (capped at 150 to prevent performance issues)
+    this.spawnConfetti(Math.min(150, 50 + streak * 10));
 
     // Show encouraging message
     this.showMessage(streak, isFast);
@@ -219,7 +221,7 @@ class CelebrationEngine {
       flames = '🔥';
     }
 
-    this.streakElement.innerHTML = `${flames} ${streak} ${message} ${flames}`;
+    this.streakElement.textContent = `${flames} ${streak} ${message} ${flames}`;
     this.streakElement.style.transform = 'translateX(-50%) scale(1)';
 
     // Animate flames
@@ -309,7 +311,7 @@ class CelebrationEngine {
     this.messageElement?.remove();
     this.streakElement?.remove();
     
-    window.removeEventListener('resize', this.resize.bind(this));
+    window.removeEventListener('resize', this.boundResize);
   }
 }
 
