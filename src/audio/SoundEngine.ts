@@ -88,7 +88,8 @@ class SoundEngine {
     }
     
     if (!this.enabled || !this.audioContext || !this.masterGain) {
-      console.log('[SoundEngine] Cannot play:', type, '- enabled:', this.enabled, 'ctx:', !!this.audioContext);
+      // Use debug level to avoid console spam from frequent tick events
+      console.debug('[SoundEngine] Cannot play:', type, '- enabled:', this.enabled, 'ctx:', !!this.audioContext);
       return;
     }
     

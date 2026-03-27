@@ -112,7 +112,7 @@ export function generateQuestion(tables: number[], operation: Operation): Questi
       ? generateMultiplication(validTables)
       : generateDivision(validTables);
     
-    const key = getQuestionKey(question.operand1, question.operand2, question.operation as 'multiply' | 'divide');
+    const key = getQuestionKey(question.operand1, question.operand2, effectiveOperation);
     
     // Check if this question (or its rotation) was recently asked
     if (!recentQuestions.has(key) || attempts >= maxAttempts) {

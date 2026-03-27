@@ -4,10 +4,10 @@
  * Game configuration screen for selecting:
  * - Player avatars
  * - Times tables (2-10)
- * - Operation (multiply/divide)
+ * - Operation (multiply/divide/both)
  * - Difficulty (easy/medium/hard)
  * - Answer mode (choice/input)
- * - Number of rounds (5/10/15)
+ * - Number of rounds (10/20/30)
  */
 
 import { Component } from '../components/Component';
