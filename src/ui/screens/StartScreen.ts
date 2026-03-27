@@ -32,6 +32,16 @@ export class StartScreen extends Component {
       <p class="start-screen__tagline">
         ${t('app.tagline')}
       </p>
+      
+      <div class="start-screen__how-to-play">
+        <h3>${t('start.howToPlay')}</h3>
+        <ul>
+          <li>${t('start.howToPlay1')}</li>
+          <li>${t('start.howToPlay2')}</li>
+          <li>${t('start.howToPlay3')}</li>
+        </ul>
+      </div>
+      
       <div class="start-screen__buttons">
         <button class="btn btn--primary btn--large" data-mode="single">
           ${t('start.singlePlayer')}
@@ -39,6 +49,7 @@ export class StartScreen extends Component {
         <button class="btn btn--secondary btn--large" data-mode="multi">
           ${t('start.twoPlayer')}
         </button>
+        <p class="start-screen__hint">${t('start.twoPlayerHint')}</p>
       </div>
     `;
 

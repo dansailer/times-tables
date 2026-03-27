@@ -15,6 +15,11 @@ export const de: Record<TranslationKey, string> = {
   'start.twoPlayer': 'Zwei Spieler',
   'start.practice': 'Übungsmodus',
   'start.battle': 'Kampfmodus',
+  'start.howToPlay': 'So geht\'s',
+  'start.howToPlay1': 'Wähle Einmaleins-Reihen (2-11)',
+  'start.howToPlay2': 'Beantworte Multiplikation oder Division',
+  'start.howToPlay3': 'Schlage die Uhr und baue deine Serie!',
+  'start.twoPlayerHint': 'Zwei Spieler wechseln sich am selben Gerät ab',
 
   // Setup screen
   'setup.title': 'Quest Einstellungen',

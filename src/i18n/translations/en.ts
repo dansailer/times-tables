@@ -13,6 +13,11 @@ export const en = {
   'start.twoPlayer': 'Two Players',
   'start.practice': 'Practice Mode',
   'start.battle': 'Battle Mode',
+  'start.howToPlay': 'How to Play',
+  'start.howToPlay1': 'Choose times tables to practice (2-11)',
+  'start.howToPlay2': 'Answer multiplication or division questions',
+  'start.howToPlay3': 'Beat the clock and build your streak!',
+  'start.twoPlayerHint': 'Two players take turns on the same device',
 
   // Setup screen
   'setup.title': 'Quest Setup',
