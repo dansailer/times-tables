@@ -77,6 +77,16 @@ export function animateRotation(state: RotationState, onComplete?: () => void): 
     return;
   }
 
+  // Guard to prevent double callback
+  let completed = false;
+  const complete = () => {
+    if (completed) return;
+    completed = true;
+    rotationElement?.classList.remove('rotatable--animating');
+    rotationElement?.removeEventListener('transitionend', handleTransitionEnd);
+    onComplete?.();
+  };
+
   // Add transition class for animation
   rotationElement.classList.add('rotatable--animating');
   
@@ -86,20 +96,14 @@ export function animateRotation(state: RotationState, onComplete?: () => void): 
   // Wait for animation to complete
   const handleTransitionEnd = (e: TransitionEvent) => {
     if (e.propertyName === 'transform') {
-      rotationElement?.classList.remove('rotatable--animating');
-      rotationElement?.removeEventListener('transitionend', handleTransitionEnd);
-      onComplete?.();
+      complete();
     }
   };
 
   rotationElement.addEventListener('transitionend', handleTransitionEnd);
 
   // Fallback timeout in case transition doesn't fire
-  setTimeout(() => {
-    rotationElement?.classList.remove('rotatable--animating');
-    rotationElement?.removeEventListener('transitionend', handleTransitionEnd);
-    onComplete?.();
-  }, 600);
+  setTimeout(complete, 600);
 }
 
 /**

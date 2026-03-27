@@ -121,6 +121,6 @@ export const DIFFICULTY_SETTINGS: Record<Difficulty, DifficultySettings> = {
 export const SCORING = {
   BASE_POINTS: 100,
   MAX_SPEED_BONUS_PERCENT: 50, // Up to 50% extra for fast answers
-  STREAK_MULTIPLIER: 0.1, // 10% bonus per streak (max 5)
-  MAX_STREAK: 5,
+  STREAK_MULTIPLIER: 0.1, // 10% bonus per streak
+  MAX_STREAK: 5, // Cap scoring bonus at 5 streaks (50% max), celebrations continue to 10
 } as const;

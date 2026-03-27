@@ -47,8 +47,6 @@ export function initI18n(): Language {
   // Update document language attribute
   document.documentElement.lang = currentLanguage;
   
-  console.log(`[i18n] Language detected: ${currentLanguage}`);
-  
   return currentLanguage;
 }
 
@@ -66,9 +64,6 @@ export function setLanguage(lang: Language): void {
   if (translations[lang]) {
     currentLanguage = lang;
     document.documentElement.lang = lang;
-    console.log(`[i18n] Language set to: ${lang}`);
-  } else {
-    console.warn(`[i18n] Unsupported language: ${lang}`);
   }
 }
 

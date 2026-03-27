@@ -218,3 +218,12 @@ class App {
 // Initialize and start app
 const app = new App();
 app.start();
+
+// Register service worker for offline support
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/times-tables/sw.js').catch(() => {
+      // Service worker registration failed - app still works online
+    });
+  });
+}
