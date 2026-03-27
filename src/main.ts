@@ -18,6 +18,7 @@ import {
   GameScreen, 
   ResultsScreen,
   initRotation,
+  setRotation,
   animateRotation,
   showPWAPromptIfNeeded,
 } from './ui';
@@ -191,10 +192,14 @@ class App {
     const screen = new ResultsScreen({
       game: this.game,
       onPlayAgain: () => {
+        // Reset rotation to original orientation before starting new game
+        setRotation('player1');
         this.game.dispatch({ type: 'PLAY_AGAIN' });
         this.showScreen('game');
       },
       onNewGame: () => {
+        // Reset rotation to original orientation before going to start screen
+        setRotation('player1');
         this.game.dispatch({ type: 'NEW_GAME' });
         this.showScreen('start');
       },
