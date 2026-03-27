@@ -106,7 +106,7 @@ export const AVATARS: Avatar[] = [
   { id: 'mermaid', emoji: '🧜‍♀️', nameKey: 'avatar.mermaid' },
   { id: 'unicorn', emoji: '🦄', nameKey: 'avatar.unicorn' },
   { id: 'ninja', emoji: '🥷', nameKey: 'avatar.ninja' },
-  { id: 'explorer', emoji: '🧭', nameKey: 'avatar.explorer' },
+  { id: 'cat', emoji: '🐱', nameKey: 'avatar.cat' },
 ];
 
 // Difficulty presets

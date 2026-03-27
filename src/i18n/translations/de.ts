@@ -95,7 +95,7 @@ export const de: Record<TranslationKey, string> = {
   'avatar.mermaid': 'Meerjungfrau',
   'avatar.unicorn': 'Einhorn',
   'avatar.ninja': 'Ninja',
-  'avatar.explorer': 'Entdecker',
+  'avatar.cat': 'Katze',
 
   // Misc
   'misc.vs': 'VS',

@@ -93,7 +93,7 @@ export const en = {
   'avatar.mermaid': 'Mermaid',
   'avatar.unicorn': 'Unicorn',
   'avatar.ninja': 'Ninja',
-  'avatar.explorer': 'Explorer',
+  'avatar.cat': 'Cat',
 
   // Misc
   'misc.vs': 'VS',
