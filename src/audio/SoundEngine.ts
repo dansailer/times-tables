@@ -34,9 +34,7 @@ class SoundEngine {
       this.masterGain.connect(this.audioContext.destination);
       this.masterGain.gain.value = 0.5;
       this.initialized = true;
-      console.log('[SoundEngine] Initialized, state:', this.audioContext.state);
-    } catch (e) {
-      console.warn('[SoundEngine] Web Audio API not supported:', e);
+    } catch {
       this.enabled = false;
     }
   }
@@ -48,10 +46,9 @@ class SoundEngine {
     try {
       if (this.audioContext?.state === 'suspended') {
         await this.audioContext.resume();
-        console.log('[SoundEngine] Resumed, state:', this.audioContext.state);
       }
-    } catch (e) {
-      console.warn('[SoundEngine] Failed to resume:', e);
+    } catch {
+      // Silently ignore - audio just won't play
     }
   }
   
@@ -88,8 +85,6 @@ class SoundEngine {
     }
     
     if (!this.enabled || !this.audioContext || !this.masterGain) {
-      // Use debug level to avoid console spam from frequent tick events
-      console.debug('[SoundEngine] Cannot play:', type, '- enabled:', this.enabled, 'ctx:', !!this.audioContext);
       return;
     }
     
@@ -97,8 +92,8 @@ class SoundEngine {
     if (this.audioContext.state === 'suspended') {
       this.audioContext.resume().then(() => {
         this.playSound(type);
-      }).catch((e) => {
-        console.warn('[SoundEngine] Resume failed:', e);
+      }).catch(() => {
+        // Silently ignore - audio just won't play
       });
     } else {
       this.playSound(type);
