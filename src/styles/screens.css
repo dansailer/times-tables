@@ -118,6 +118,11 @@
   gap: var(--spacing-sm);
 }
 
+/* Player 2 avatar column rotated 180° for face-to-face play */
+.setup-avatar-column--rotated {
+  transform: rotate(180deg);
+}
+
 .setup-player-label {
   font-size: var(--font-size-md);
   font-weight: 700;

@@ -33,7 +33,7 @@ export class ResultsScreen extends Component {
     this.addClass('screen', 'results-screen');
     this.render();
     
-    // Play fanfare and launch confetti on mount
+    // Play cheer and launch confetti on mount
     this.celebrate();
   }
   
@@ -41,8 +41,8 @@ export class ResultsScreen extends Component {
    * Play celebration effects
    */
   private celebrate(): void {
-    // Play fanfare sound
-    soundEngine.play('fanfare');
+    // Play cheer sound
+    soundEngine.play('cheer');
     
     // Launch confetti with slight delay for dramatic effect
     this.celebrateTimeout = window.setTimeout(() => {

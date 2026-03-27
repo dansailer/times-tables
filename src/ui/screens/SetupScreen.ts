@@ -96,7 +96,7 @@ export class SetupScreen extends Component {
               <div id="avatar-picker-1"></div>
             </div>
             ${isTwoPlayer ? `
-              <div class="setup-avatar-column">
+              <div class="setup-avatar-column setup-avatar-column--rotated">
                 <div class="setup-player-label">${t('setup.player2')}</div>
                 <div id="avatar-picker-2"></div>
               </div>

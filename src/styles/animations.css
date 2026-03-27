@@ -274,3 +274,58 @@
   animation: bounce 1s ease infinite;
   animation-delay: 0.3s;
 }
+
+/* ==========================================================================
+   Reduced Motion Support
+   
+   For users who prefer reduced motion (motion sensitivity, vestibular disorders),
+   disable or minimize animations while keeping essential visual feedback.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Disable all animations globally */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  /* Keep confetti hidden entirely */
+  .confetti-container {
+    display: none !important;
+  }
+
+  /* Remove bouncing effects */
+  .results-winner__crown,
+  .turn-indicator--transition .avatar,
+  .animate-bounce {
+    animation: none !important;
+  }
+
+  /* Disable glow effects */
+  .animate-glow {
+    animation: none !important;
+    box-shadow: 0 0 5px var(--color-primary) !important;
+  }
+
+  /* Keep button press feedback but make it instant */
+  .btn:active,
+  .setup-table-btn:active,
+  .setup-option:active,
+  .answer-option:active,
+  .number-pad__key:active {
+    transform: scale(0.95);
+    transition: none !important;
+  }
+
+  /* Ensure delayed elements are visible without waiting */
+  .results-screen__stats,
+  .results-screen__actions {
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
