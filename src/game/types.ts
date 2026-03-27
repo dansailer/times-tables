@@ -78,6 +78,7 @@ export interface GameConfig {
   rounds: RoundCount;
   players: [Player] | [Player, Player];
   speedWins: boolean; // If true, fastest correct answer wins; if false, both correct = tie
+  celebrations: boolean; // If true, show celebration effects (confetti, messages, etc.)
 }
 
 // Difficulty settings

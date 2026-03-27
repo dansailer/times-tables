@@ -16,6 +16,7 @@ import { MultipleChoice } from '../components/MultipleChoice';
 import { NumberPad } from '../components/NumberPad';
 import { rotateToPlayer } from '../rotation';
 import { shakeElement, pulseElement } from '../animations';
+import { celebrationEngine } from '../celebrations';
 import { soundEngine } from '../../audio';
 import { t, type TranslationKey } from '../../i18n';
 import type { Game, GameListener } from '../../game/Game';
@@ -210,9 +211,39 @@ export class GameScreen extends Component {
     this.screenState = 'feedback';
     this.stopTimer();
     
+    const config = this.game.getConfig();
+    const timeRemaining = this.game.getTimer().getRemaining();
+    const timeLimit = this.game.getTimeLimit();
+    
     // Play sound and trigger animation
     if (isCorrect) {
       soundEngine.play('correct');
+      
+      // Get player's streak (will be updated after dispatch)
+      const player = this.game.getCurrentPlayer();
+      const newStreak = player.streak + 1; // Anticipate the new streak
+      
+      // Play streak celebration sounds
+      if (newStreak === 10) {
+        soundEngine.play('streak10');
+      } else if (newStreak === 5) {
+        soundEngine.play('streak5');
+      } else if (newStreak === 3) {
+        soundEngine.play('streak3');
+      }
+      
+      // Trigger celebrations if enabled
+      if (config.celebrations) {
+        // Consider "fast" if answered in less than 30% of the time
+        const isFast = timeRemaining > timeLimit * 0.7;
+        celebrationEngine.celebrate(newStreak, isFast);
+        
+        // Bounce avatar
+        const avatarEl = this.element.querySelector<HTMLElement>('.avatar--large');
+        if (avatarEl) {
+          celebrationEngine.bounceAvatar(avatarEl);
+        }
+      }
     } else {
       soundEngine.play('wrong');
     }

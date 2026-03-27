@@ -21,6 +21,7 @@ import {
   setRotation,
   animateRotation,
   showPWAPromptIfNeeded,
+  celebrationEngine,
 } from './ui';
 
 // Initialize i18n first
@@ -46,6 +47,9 @@ class App {
     
     // Initialize rotation system
     initRotation(this.appContainer);
+    
+    // Initialize celebration engine
+    celebrationEngine.init();
     
     // Initialize sound on first user interaction
     this.initSoundOnInteraction();
@@ -139,6 +143,7 @@ class App {
         if (config.answerMode) this.game.setAnswerMode(config.answerMode);
         if (config.rounds) this.game.setRounds(config.rounds);
         if (config.speedWins !== undefined) this.game.setSpeedWins(config.speedWins);
+        if (config.celebrations !== undefined) this.game.setCelebrations(config.celebrations);
         
         // Apply avatar selections
         if (config.player1Avatar) this.game.setPlayerAvatar(1, config.player1Avatar);

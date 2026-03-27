@@ -31,6 +31,11 @@ export const de: Record<TranslationKey, string> = {
   'setup.speedWinsOffDesc': 'Beide richtig = Unentschieden',
   'setup.speedWinsOn': 'Schnellster gewinnt',
   'setup.speedWinsOnDesc': 'Schnellste Antwort gewinnt',
+  'setup.celebrations': 'Animationen',
+  'setup.celebrationsOn': 'An',
+  'setup.celebrationsOnDesc': 'Konfetti, Nachrichten & Effekte',
+  'setup.celebrationsOff': 'Aus',
+  'setup.celebrationsOffDesc': 'Minimales Feedback',
   'setup.startGame': 'Quest starten!',
   'setup.back': 'Zurück',
 
@@ -100,6 +105,20 @@ export const de: Record<TranslationKey, string> = {
   // Misc
   'misc.vs': 'VS',
   'misc.loading': 'Laden...',
+
+  // Celebrations & Encouragement
+  'celebration.correct1': 'Super!',
+  'celebration.correct2': 'Toll gemacht!',
+  'celebration.correct3': 'Fantastisch!',
+  'celebration.correct4': 'Klasse!',
+  'celebration.correct5': 'Genial!',
+  'celebration.correct6': 'Spitze!',
+  'celebration.correct7': 'Wunderbar!',
+  'celebration.correct8': 'Ausgezeichnet!',
+  'celebration.streak3': 'Du brennst!',
+  'celebration.streak5': 'Unaufhaltbar!',
+  'celebration.streak10': 'LEGENDÄR!',
+  'celebration.fast': 'Blitzschnell!',
 
   // PWA / Add to Home Screen
   'pwa.title': 'Vollbild spielen!',
