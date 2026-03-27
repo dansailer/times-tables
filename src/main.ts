@@ -223,7 +223,7 @@ app.start();
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     // Use Vite's BASE_URL to support different deployment paths
-    const swUrl = new URL('sw.js', import.meta.env.BASE_URL).href;
+    const swUrl = `${import.meta.env.BASE_URL}sw.js`;
     navigator.serviceWorker.register(swUrl).catch(() => {
       // Service worker registration failed - app still works online
     });

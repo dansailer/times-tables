@@ -101,9 +101,19 @@ export class Timer {
    * Resume a paused timer
    */
   resume(): void {
-    if (this.remaining > 0) {
-      this.duration = this.remaining;
-      this.start();
+    if (this.remaining > 0 && this.timerId === null) {
+      // Adjust startTime to account for already elapsed time
+      // This keeps duration unchanged so progress calculation remains correct
+      const elapsed = this.duration - this.remaining;
+      this.startTime = performance.now() - elapsed;
+      
+      // Set up interval for updates
+      this.timerId = window.setInterval(() => {
+        this.tick();
+      }, this.tickInterval);
+      
+      // Initial tick
+      this.tick();
     }
   }
 
