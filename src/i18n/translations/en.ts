@@ -35,6 +35,7 @@ export const en = {
   // Operations
   'operation.multiply': 'Multiplication',
   'operation.divide': 'Division',
+  'operation.both': 'Both',
 
   // Difficulty
   'difficulty.easy': 'Easy',

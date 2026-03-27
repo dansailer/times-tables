@@ -4,7 +4,7 @@
 
 // Game modes
 export type GameMode = 'single' | 'multi';
-export type Operation = 'multiply' | 'divide';
+export type Operation = 'multiply' | 'divide' | 'both';
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type AnswerMode = 'choice' | 'input';
 export type RoundCount = 5 | 10 | 15;

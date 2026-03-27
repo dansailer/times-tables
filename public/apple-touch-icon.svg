@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <defs>
+    <linearGradient id="ocean" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d3456"/>
+      <stop offset="100%" style="stop-color:#0a2540"/>
+    </linearGradient>
+    <linearGradient id="blue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0088cc"/>
+      <stop offset="100%" style="stop-color:#006699"/>
+    </linearGradient>
+    <linearGradient id="teal" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4aa"/>
+      <stop offset="100%" style="stop-color:#00a080"/>
+    </linearGradient>
+  </defs>
+  <!-- Background -->
+  <rect width="180" height="180" rx="40" fill="url(#ocean)"/>
+  <!-- Inner circle -->
+  <circle cx="90" cy="90" r="65" fill="url(#blue)" opacity="0.9"/>
+  <!-- Multiplication symbol -->
+  <g stroke="url(#teal)" stroke-width="18" stroke-linecap="round">
+    <line x1="55" y1="55" x2="125" y2="125"/>
+    <line x1="125" y1="55" x2="55" y2="125"/>
+  </g>
+  <!-- Decorative waves -->
+  <path d="M25 140 Q50 130 75 140 T125 140 T155 140" fill="none" stroke="#40e0d0" stroke-width="6" stroke-linecap="round" opacity="0.5"/>
+  <path d="M35 155 Q55 147 75 155 T115 155 T145 155" fill="none" stroke="#40e0d0" stroke-width="4" stroke-linecap="round" opacity="0.3"/>
+</svg>

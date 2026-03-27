@@ -37,6 +37,7 @@ export const de: Record<TranslationKey, string> = {
   // Operations
   'operation.multiply': 'Multiplikation',
   'operation.divide': 'Division',
+  'operation.both': 'Beides',
 
   // Difficulty
   'difficulty.easy': 'Leicht',

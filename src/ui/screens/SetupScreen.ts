@@ -132,6 +132,12 @@ export class SetupScreen extends Component {
             >
               ${t('operation.divide')}
             </button>
+            <button 
+              class="setup-option ${this.selectedOperation === 'both' ? 'setup-option--selected' : ''}" 
+              data-operation="both"
+            >
+              ${t('operation.both')}
+            </button>
           </div>
         </section>
 
