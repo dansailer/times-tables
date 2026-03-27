@@ -226,8 +226,8 @@ export class GameScreen extends Component {
       // Trigger celebrations if enabled
       if (config.celebrations) {
         
-        // Consider "fast" if answered in less than 30% of the time
-        const isFast = timeRemaining > timeLimit * 0.7;
+        // Consider "fast" if answered in less than 20% of the time
+        const isFast = timeRemaining > timeLimit * 0.8;
         // Rotate celebration for player 2 in two-player mode
         const isRotated = config.mode === 'multi' && player.id === 2;
         celebrationEngine.celebrate(newStreak, isFast, isRotated);

@@ -103,7 +103,7 @@ class CelebrationEngine {
       top: 30%;
       left: 50%;
       transform: translateX(-50%) scale(0);
-      font-size: 1.2rem;
+      font-size: 0.8rem;
       font-weight: bold;
       color: #FF6B6B;
       text-shadow: 0 0 15px rgba(255, 107, 107, 0.7), 2px 2px 4px rgba(0, 0, 0, 0.3);
