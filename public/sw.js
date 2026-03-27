@@ -6,21 +6,35 @@
  */
 
 const CACHE_NAME = 'times-tables-v1';
+
+// Relative asset paths (will be prefixed with base path)
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/favicon.svg',
-  '/favicon.ico',
-  '/apple-touch-icon.png',
-  '/apple-touch-icon.svg'
+  '',                     // app root
+  'index.html',
+  'manifest.json',
+  'favicon.svg',
+  'favicon.ico',
+  'apple-touch-icon.png',
+  'apple-touch-icon.svg'
 ];
 
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
+      // Derive base path from service worker scope
+      const scopeUrl = new URL(self.registration.scope);
+      const basePath = scopeUrl.pathname.replace(/\/$/, '');
+      
+      // Build full URLs with base path
+      const urlsToCache = ASSETS_TO_CACHE.map((path) => {
+        if (!path) {
+          return basePath + '/';
+        }
+        return basePath + '/' + path;
+      });
+      
+      return cache.addAll(urlsToCache);
     })
   );
   // Activate immediately

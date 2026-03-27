@@ -222,7 +222,9 @@ app.start();
 // Register service worker for offline support
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/times-tables/sw.js').catch(() => {
+    // Use Vite's BASE_URL to support different deployment paths
+    const swUrl = new URL('sw.js', import.meta.env.BASE_URL).href;
+    navigator.serviceWorker.register(swUrl).catch(() => {
       // Service worker registration failed - app still works online
     });
   });
