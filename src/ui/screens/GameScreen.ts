@@ -228,7 +228,9 @@ export class GameScreen extends Component {
         
         // Consider "fast" if answered in less than 30% of the time
         const isFast = timeRemaining > timeLimit * 0.7;
-        celebrationEngine.celebrate(newStreak, isFast);
+        // Rotate celebration for player 2 in two-player mode
+        const isRotated = config.mode === 'multi' && player.id === 2;
+        celebrationEngine.celebrate(newStreak, isFast, isRotated);
         
         // Bounce avatar
         const avatarEl = this.element.querySelector<HTMLElement>('.avatar--large');
