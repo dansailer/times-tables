@@ -103,7 +103,7 @@ class CelebrationEngine {
       top: 30%;
       left: 50%;
       transform: translateX(-50%) scale(0);
-      font-size: 1.8rem;
+      font-size: 0.8rem;
       font-weight: bold;
       color: #FF6B6B;
       text-shadow: 0 0 15px rgba(255, 107, 107, 0.7), 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -130,17 +130,20 @@ class CelebrationEngine {
 
   /**
    * Trigger celebration for correct answer
+   * @param streak Current streak count
+   * @param isFast Whether the answer was fast
+   * @param isRotated Whether to rotate 180° for player 2
    */
-  celebrate(streak: number, isFast: boolean = false): void {
+  celebrate(streak: number, isFast: boolean = false, isRotated: boolean = false): void {
     // Show confetti (capped at 150 to prevent performance issues)
     this.spawnConfetti(Math.min(150, 50 + streak * 10));
 
     // Show encouraging message
-    this.showMessage(streak, isFast);
+    this.showMessage(streak, isFast, isRotated);
 
     // Show streak indicator if streak >= 3
     if (streak >= 3) {
-      this.showStreak(streak);
+      this.showStreak(streak, isRotated);
     }
 
     // Start animation loop if not running
@@ -178,7 +181,7 @@ class CelebrationEngine {
   /**
    * Show encouraging message
    */
-  private showMessage(_streak: number, isFast: boolean): void {
+  private showMessage(_streak: number, isFast: boolean, isRotated: boolean = false): void {
     if (!this.messageElement) return;
 
     let message: string;
@@ -191,12 +194,13 @@ class CelebrationEngine {
     }
 
     this.messageElement.textContent = message;
-    this.messageElement.style.transform = 'translateX(-50%) scale(1)';
+    const rotation = isRotated ? 'rotate(180deg)' : '';
+    this.messageElement.style.transform = `translateX(-50%) scale(1) ${rotation}`;
 
     // Hide after delay
     setTimeout(() => {
       if (this.messageElement) {
-        this.messageElement.style.transform = 'translateX(-50%) scale(0)';
+        this.messageElement.style.transform = `translateX(-50%) scale(0) ${rotation}`;
       }
     }, 1500);
   }
@@ -204,7 +208,7 @@ class CelebrationEngine {
   /**
    * Show streak indicator with flames
    */
-  private showStreak(streak: number): void {
+  private showStreak(streak: number, isRotated: boolean = false): void {
     if (!this.streakElement) return;
 
     let message: string;
@@ -221,8 +225,9 @@ class CelebrationEngine {
       flames = '🔥';
     }
 
-    this.streakElement.textContent = `${flames} ${streak} ${message} ${flames}`;
-    this.streakElement.style.transform = 'translateX(-50%) scale(1)';
+    this.streakElement.textContent = `${flames} ${message} ${flames}`;
+    const rotation = isRotated ? 'rotate(180deg)' : '';
+    this.streakElement.style.transform = `translateX(-50%) scale(1) ${rotation}`;
 
     // Animate flames
     this.streakElement.style.animation = 'none';
@@ -232,7 +237,7 @@ class CelebrationEngine {
     // Hide after delay
     setTimeout(() => {
       if (this.streakElement) {
-        this.streakElement.style.transform = 'translateX(-50%) scale(0)';
+        this.streakElement.style.transform = `translateX(-50%) scale(0) ${rotation}`;
       }
     }, 2000);
   }
