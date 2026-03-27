@@ -7,7 +7,7 @@ export type GameMode = 'single' | 'multi';
 export type Operation = 'multiply' | 'divide' | 'both';
 export type Difficulty = 'easy' | 'medium' | 'hard';
 export type AnswerMode = 'choice' | 'input';
-export type RoundCount = 5 | 10 | 15;
+export type RoundCount = 10 | 20 | 30;
 
 // Game states
 export type GameState = 

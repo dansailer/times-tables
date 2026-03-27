@@ -20,18 +20,21 @@ class SoundEngine {
   private audioContext: AudioContext | null = null;
   private masterGain: GainNode | null = null;
   private enabled: boolean = true;
+  private initialized: boolean = false;
   
   /**
    * Initialize the audio context (must be called from user interaction)
    */
   init(): void {
-    if (this.audioContext) return;
+    if (this.initialized) return;
     
     try {
       this.audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
       this.masterGain = this.audioContext.createGain();
       this.masterGain.connect(this.audioContext.destination);
       this.masterGain.gain.value = 0.5;
+      this.initialized = true;
+      console.log('[SoundEngine] Initialized, state:', this.audioContext.state);
     } catch (e) {
       console.warn('[SoundEngine] Web Audio API not supported:', e);
       this.enabled = false;
@@ -45,9 +48,10 @@ class SoundEngine {
     try {
       if (this.audioContext?.state === 'suspended') {
         await this.audioContext.resume();
+        console.log('[SoundEngine] Resumed, state:', this.audioContext.state);
       }
-    } catch {
-      // Silently ignore - audio just won't play
+    } catch (e) {
+      console.warn('[SoundEngine] Failed to resume:', e);
     }
   }
   
@@ -78,15 +82,32 @@ class SoundEngine {
    * Play a sound effect
    */
   play(type: SoundType): void {
-    if (!this.enabled || !this.audioContext || !this.masterGain) return;
-    
-    // Ensure context is running
-    if (this.audioContext.state === 'suspended') {
-      this.audioContext.resume().catch(() => {
-        // Silently ignore - audio just won't play
-      });
+    // Auto-initialize if not done yet (fallback)
+    if (!this.initialized) {
+      this.init();
     }
     
+    if (!this.enabled || !this.audioContext || !this.masterGain) {
+      console.log('[SoundEngine] Cannot play:', type, '- enabled:', this.enabled, 'ctx:', !!this.audioContext);
+      return;
+    }
+    
+    // Ensure context is running (iOS requires this on each interaction)
+    if (this.audioContext.state === 'suspended') {
+      this.audioContext.resume().then(() => {
+        this.playSound(type);
+      }).catch((e) => {
+        console.warn('[SoundEngine] Resume failed:', e);
+      });
+    } else {
+      this.playSound(type);
+    }
+  }
+  
+  /**
+   * Internal: actually play the sound
+   */
+  private playSound(type: SoundType): void {
     switch (type) {
       case 'correct':
         this.playCorrect();

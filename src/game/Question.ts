@@ -6,9 +6,9 @@
 
 import type { Question, Operation } from './types';
 
-// Track recent questions to avoid immediate repeats
-let recentQuestions: string[] = [];
-const MAX_RECENT = 5;
+// Track recent questions to avoid immediate repeats (includes rotations like 6×7 and 7×6)
+let recentQuestions: Set<string> = new Set();
+const MAX_RECENT = 10;
 
 /**
  * Generate a unique question ID
@@ -18,10 +18,18 @@ function generateId(): string {
 }
 
 /**
- * Create a question key for tracking duplicates
+ * Create a normalized question key for tracking duplicates.
+ * Uses sorted operands to detect rotations (6×7 same as 7×6).
  */
-function getQuestionKey(operand1: number, operand2: number, operation: Operation): string {
-  return `${operand1}_${operand2}_${operation}`;
+function getQuestionKey(operand1: number, operand2: number, operation: 'multiply' | 'divide'): string {
+  if (operation === 'multiply') {
+    // For multiplication, normalize by sorting operands (6×7 = 7×6)
+    const sorted = [operand1, operand2].sort((a, b) => a - b);
+    return `${sorted[0]}_${sorted[1]}_multiply`;
+  } else {
+    // For division, order matters (dividend ÷ divisor)
+    return `${operand1}_${operand2}_divide`;
+  }
 }
 
 /**
@@ -31,8 +39,8 @@ function generateMultiplication(tables: number[]): Question {
   // Select a random table
   const table = tables[Math.floor(Math.random() * tables.length)]!;
   
-  // Select a random multiplier (1-10)
-  const multiplier = Math.floor(Math.random() * 10) + 1;
+  // Select a random multiplier (2-10, avoiding 1)
+  const multiplier = Math.floor(Math.random() * 9) + 2;
   
   // Randomly decide order (e.g., 3×7 or 7×3)
   const swap = Math.random() > 0.5;
@@ -58,8 +66,8 @@ function generateDivision(tables: number[]): Question {
   // Select a random table (this will be the divisor)
   const divisor = tables[Math.floor(Math.random() * tables.length)]!;
   
-  // Select a random quotient (1-10)
-  const quotient = Math.floor(Math.random() * 10) + 1;
+  // Select a random quotient (2-10, avoiding 1)
+  const quotient = Math.floor(Math.random() * 9) + 2;
   
   // Calculate dividend (the product)
   const dividend = divisor * quotient;
@@ -84,7 +92,7 @@ function generateDivision(tables: number[]): Question {
 export function generateQuestion(tables: number[], operation: Operation): Question {
   let question: Question;
   let attempts = 0;
-  const maxAttempts = 20;
+  const maxAttempts = 30;
   
   // Ensure we have valid tables
   const validTables = tables.filter(t => t >= 2 && t <= 10);
@@ -104,14 +112,17 @@ export function generateQuestion(tables: number[], operation: Operation): Questi
       ? generateMultiplication(validTables)
       : generateDivision(validTables);
     
-    const key = getQuestionKey(question.operand1, question.operand2, question.operation);
+    const key = getQuestionKey(question.operand1, question.operand2, question.operation as 'multiply' | 'divide');
     
-    // Check if this question was recently asked
-    if (!recentQuestions.includes(key) || attempts >= maxAttempts) {
+    // Check if this question (or its rotation) was recently asked
+    if (!recentQuestions.has(key) || attempts >= maxAttempts) {
       // Add to recent questions
-      recentQuestions.push(key);
-      if (recentQuestions.length > MAX_RECENT) {
-        recentQuestions.shift();
+      recentQuestions.add(key);
+      
+      // Trim old entries if we exceed max
+      if (recentQuestions.size > MAX_RECENT) {
+        const firstKey = recentQuestions.values().next().value;
+        if (firstKey) recentQuestions.delete(firstKey);
       }
       break;
     }
@@ -201,5 +212,5 @@ export function generateChoices(correctAnswer: number, wrongCount: number = 2): 
  * Clear recent questions history (useful when starting new game)
  */
 export function clearQuestionHistory(): void {
-  recentQuestions = [];
+  recentQuestions = new Set();
 }

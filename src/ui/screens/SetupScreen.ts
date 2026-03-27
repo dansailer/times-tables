@@ -180,7 +180,7 @@ export class SetupScreen extends Component {
         <section class="setup-section">
           <h3>${t('setup.selectRounds')}</h3>
           <div class="setup-options">
-            ${([5, 10, 15] as RoundCount[]).map(r => `
+            ${([10, 20, 30] as RoundCount[]).map(r => `
               <button 
                 class="setup-option ${this.selectedRounds === r ? 'setup-option--selected' : ''}" 
                 data-rounds="${r}"
