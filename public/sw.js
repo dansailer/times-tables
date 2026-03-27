@@ -109,7 +109,9 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Network failed and no cache - return offline fallback for navigation
         if (event.request.mode === 'navigate') {
-          return caches.match('index.html').then((offlinePage) => {
+          // Use URL relative to service worker scope for base path compatibility
+          const offlineUrl = new URL('./index.html', self.registration.scope).toString();
+          return caches.match(offlineUrl, { ignoreSearch: true }).then((offlinePage) => {
             if (offlinePage) {
               return offlinePage;
             }

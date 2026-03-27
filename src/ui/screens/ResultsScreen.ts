@@ -33,7 +33,7 @@ export class ResultsScreen extends Component {
     this.addClass('screen', 'results-screen');
     this.render();
     
-    // Play fanfare and launch confetti on mount
+    // Play cheer and launch confetti on mount
     this.celebrate();
   }
   
