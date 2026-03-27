@@ -218,21 +218,13 @@ export class GameScreen extends Component {
     // Play sound and trigger animation
     if (isCorrect) {
       soundEngine.play('correct');
-      
+
       // Get player's streak (will be updated after dispatch)
       const player = this.game.getCurrentPlayer();
       const newStreak = player.streak + 1; // Anticipate the new streak
-      
+
       // Trigger celebrations if enabled
       if (config.celebrations) {
-        // Play streak celebration sounds
-        if (newStreak === 10) {
-          soundEngine.play('streak10');
-        } else if (newStreak === 5) {
-          soundEngine.play('streak5');
-        } else if (newStreak === 3) {
-          soundEngine.play('streak3');
-        }
         
         // Consider "fast" if answered in less than 30% of the time
         const isFast = timeRemaining > timeLimit * 0.7;

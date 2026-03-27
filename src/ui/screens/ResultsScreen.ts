@@ -41,8 +41,8 @@ export class ResultsScreen extends Component {
    * Play celebration effects
    */
   private celebrate(): void {
-    // Play fanfare sound
-    soundEngine.play('fanfare');
+    // Play cheer sound
+    soundEngine.play('cheer');
     
     // Launch confetti with slight delay for dramatic effect
     this.celebrateTimeout = window.setTimeout(() => {
