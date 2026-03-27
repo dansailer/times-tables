@@ -90,6 +90,7 @@ export class Game {
       answerMode: 'choice',
       rounds: 10,
       speedWins: false, // Default: both correct = tie
+      celebrations: true, // Default: show celebration effects
       players: [
         createPlayer(1, AVATARS[0]!),
         createPlayer(2, AVATARS[1]!),
@@ -243,6 +244,10 @@ export class Game {
     this.config.speedWins = speedWins;
   }
 
+  setCelebrations(celebrations: boolean): void {
+    this.config.celebrations = celebrations;
+  }
+
   setPlayerAvatar(playerId: 1 | 2, avatar: Avatar): void {
     const playerIndex = playerId - 1;
     if (this.config.players[playerIndex]) {
@@ -266,6 +271,7 @@ export class Game {
         if (event.config.answerMode) this.setAnswerMode(event.config.answerMode);
         if (event.config.rounds) this.setRounds(event.config.rounds);
         if (event.config.speedWins !== undefined) this.setSpeedWins(event.config.speedWins);
+        if (event.config.celebrations !== undefined) this.setCelebrations(event.config.celebrations);
         break;
 
       case 'START_GAME':

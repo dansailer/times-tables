@@ -29,6 +29,11 @@ export const en = {
   'setup.speedWinsOffDesc': 'Both correct = Tie',
   'setup.speedWinsOn': 'Speed Wins',
   'setup.speedWinsOnDesc': 'Fastest answer wins',
+  'setup.celebrations': 'Celebrations',
+  'setup.celebrationsOn': 'On',
+  'setup.celebrationsOnDesc': 'Confetti, messages & effects',
+  'setup.celebrationsOff': 'Off',
+  'setup.celebrationsOffDesc': 'Minimal feedback',
   'setup.startGame': 'Start Quest!',
   'setup.back': 'Back',
 
@@ -98,6 +103,20 @@ export const en = {
   // Misc
   'misc.vs': 'VS',
   'misc.loading': 'Loading...',
+
+  // Celebrations & Encouragement
+  'celebration.correct1': 'Awesome!',
+  'celebration.correct2': 'Great job!',
+  'celebration.correct3': 'Amazing!',
+  'celebration.correct4': 'Fantastic!',
+  'celebration.correct5': 'Brilliant!',
+  'celebration.correct6': 'Super!',
+  'celebration.correct7': 'Wonderful!',
+  'celebration.correct8': 'Excellent!',
+  'celebration.streak3': 'On fire!',
+  'celebration.streak5': 'Unstoppable!',
+  'celebration.streak10': 'LEGENDARY!',
+  'celebration.fast': 'Lightning fast!',
 
   // PWA / Add to Home Screen
   'pwa.title': 'Play Fullscreen!',

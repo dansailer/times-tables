@@ -31,6 +31,7 @@ export interface SetupConfig {
   answerMode?: AnswerMode;
   rounds?: RoundCount;
   speedWins?: boolean;
+  celebrations?: boolean;
   player1Avatar?: Avatar;
   player2Avatar?: Avatar;
 }
@@ -54,6 +55,7 @@ export class SetupScreen extends Component {
   private selectedAnswerMode: AnswerMode = 'choice';
   private selectedRounds: RoundCount = 10;
   private selectedSpeedWins: boolean = false;
+  private selectedCelebrations: boolean = true;
   private player1Avatar: Avatar = AVATARS[0]!;
   private player2Avatar: Avatar = AVATARS[1]!;
 
@@ -69,6 +71,7 @@ export class SetupScreen extends Component {
     this.selectedAnswerMode = options.config.answerMode;
     this.selectedRounds = options.config.rounds;
     this.selectedSpeedWins = options.config.speedWins;
+    this.selectedCelebrations = options.config.celebrations;
     this.player1Avatar = options.config.players[0]?.avatar ?? AVATARS[0]!;
     if (options.mode === 'multi') {
       this.player2Avatar = options.config.players[1]?.avatar ?? AVATARS[1]!;
@@ -191,6 +194,27 @@ export class SetupScreen extends Component {
           </div>
         </section>
 
+        <!-- Celebrations -->
+        <section class="setup-section">
+          <h3>${t('setup.celebrations')}</h3>
+          <div class="setup-options">
+            <button 
+              class="setup-option ${this.selectedCelebrations ? 'setup-option--selected' : ''}" 
+              data-celebrations="true"
+            >
+              <span class="setup-option__label">${t('setup.celebrationsOn')}</span>
+              <span class="setup-option__desc">${t('setup.celebrationsOnDesc')}</span>
+            </button>
+            <button 
+              class="setup-option ${!this.selectedCelebrations ? 'setup-option--selected' : ''}" 
+              data-celebrations="false"
+            >
+              <span class="setup-option__label">${t('setup.celebrationsOff')}</span>
+              <span class="setup-option__desc">${t('setup.celebrationsOffDesc')}</span>
+            </button>
+          </div>
+        </section>
+
         ${isTwoPlayer ? `
         <!-- Speed Wins (Two-player only) -->
         <section class="setup-section">
@@ -275,6 +299,15 @@ export class SetupScreen extends Component {
         const rounds = parseInt((e.currentTarget as HTMLElement).dataset.rounds!, 10) as RoundCount;
         this.selectedRounds = rounds;
         this.updateSelection('[data-rounds]', `[data-rounds="${rounds}"]`);
+      });
+    });
+
+    // Celebrations selection
+    this.element.querySelectorAll('[data-celebrations]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const celebrations = (e.currentTarget as HTMLElement).dataset.celebrations === 'true';
+        this.selectedCelebrations = celebrations;
+        this.updateSelection('[data-celebrations]', `[data-celebrations="${celebrations}"]`);
       });
     });
 
@@ -368,6 +401,7 @@ export class SetupScreen extends Component {
       answerMode: this.selectedAnswerMode,
       rounds: this.selectedRounds,
       speedWins: this.selectedSpeedWins,
+      celebrations: this.selectedCelebrations,
       player1Avatar: this.player1Avatar,
       player2Avatar: this.player2Avatar,
     });

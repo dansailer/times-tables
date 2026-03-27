@@ -42,6 +42,9 @@ export {
   showStars,
 } from './animations';
 
+// Celebrations
+export { celebrationEngine } from './celebrations';
+
 // Screens
 export {
   StartScreen,

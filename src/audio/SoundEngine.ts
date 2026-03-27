@@ -12,9 +12,12 @@
  * - timeout: Time's up sound
  * - fanfare: Victory celebration
  * - buttonClick: UI feedback
+ * - streak3: Three in a row celebration
+ * - streak5: Five in a row celebration
+ * - streak10: Ten in a row epic celebration
  */
 
-type SoundType = 'correct' | 'wrong' | 'tick' | 'tickWarning' | 'timeout' | 'fanfare' | 'buttonClick';
+type SoundType = 'correct' | 'wrong' | 'tick' | 'tickWarning' | 'timeout' | 'fanfare' | 'buttonClick' | 'streak3' | 'streak5' | 'streak10';
 
 class SoundEngine {
   private audioContext: AudioContext | null = null;
@@ -127,6 +130,15 @@ class SoundEngine {
         break;
       case 'buttonClick':
         this.playButtonClick();
+        break;
+      case 'streak3':
+        this.playStreak(3);
+        break;
+      case 'streak5':
+        this.playStreak(5);
+        break;
+      case 'streak10':
+        this.playStreak(10);
         break;
     }
   }
@@ -304,6 +316,59 @@ class SoundEngine {
     
     osc.start(now);
     osc.stop(now + 0.03);
+  }
+
+  /**
+   * Streak celebration - escalating triumphant sounds
+   */
+  private playStreak(level: 3 | 5 | 10): void {
+    const ctx = this.audioContext!;
+    const now = ctx.currentTime;
+
+    // Different melodies for different streak levels
+    let notes: { freq: number; start: number; duration: number }[];
+    
+    if (level === 3) {
+      // Quick ascending two-note celebration
+      notes = [
+        { freq: 523.25, start: 0, duration: 0.12 },     // C5
+        { freq: 659.25, start: 0.1, duration: 0.15 },   // E5
+      ];
+    } else if (level === 5) {
+      // Three-note triumphant arpeggio
+      notes = [
+        { freq: 523.25, start: 0, duration: 0.1 },      // C5
+        { freq: 659.25, start: 0.08, duration: 0.1 },   // E5
+        { freq: 783.99, start: 0.16, duration: 0.2 },   // G5
+      ];
+    } else {
+      // Epic four-note fanfare for streak of 10
+      notes = [
+        { freq: 523.25, start: 0, duration: 0.1 },      // C5
+        { freq: 659.25, start: 0.08, duration: 0.1 },   // E5
+        { freq: 783.99, start: 0.16, duration: 0.1 },   // G5
+        { freq: 1046.50, start: 0.24, duration: 0.3 },  // C6 (octave higher!)
+      ];
+    }
+
+    notes.forEach(note => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.type = level === 10 ? 'square' : 'triangle';
+      osc.frequency.value = note.freq;
+      
+      const volume = level === 10 ? 0.2 : 0.15;
+      gain.gain.setValueAtTime(0, now + note.start);
+      gain.gain.linearRampToValueAtTime(volume, now + note.start + 0.02);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + note.start + note.duration);
+      
+      osc.connect(gain);
+      gain.connect(this.masterGain!);
+      
+      osc.start(now + note.start);
+      osc.stop(now + note.start + note.duration);
+    });
   }
 }
 
