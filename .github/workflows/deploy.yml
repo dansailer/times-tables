@@ -81,6 +81,8 @@ jobs:
           allowed-endpoints: >
             api.github.com:443
             results-receiver.actions.githubusercontent.com:443
+            codeload.github.com:443
+            token.actions.githubusercontent.com:443
 
       - name: Deploy to GitHub Pages
         id: deployment
